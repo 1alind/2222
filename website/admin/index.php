@@ -24,8 +24,8 @@ if (file_exists($analyticsFile)) {
 $totalProducts = count($products);
 $visibleProducts = count(array_filter($products, fn($p) => !isset($p['hidden']) || !$p['hidden']));
 $hiddenProducts = $totalProducts - $visibleProducts;
-$totalViews = array_sum(array_column($analytics, 'views', 0));
-$totalOrders = array_sum(array_column($analytics, 'orders', 0));
+$totalViews = array_sum(array_column($analytics, 'views'));
+$totalOrders = array_sum(array_column($analytics, 'orders'));
 ?>
 <!DOCTYPE html>
 <html lang="en">

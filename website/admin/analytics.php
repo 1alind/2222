@@ -136,6 +136,13 @@ usort($topProducts, fn($a, $b) => ($b['orders'] ?? 0) - ($a['orders'] ?? 0));
                 </div>
             </div>
             
+            <div class="chart-section" style="margin-bottom: 30px;">
+                <h2>Views vs Orders (Overall)</h2>
+                <div style="position: relative; height: 300px; width: 100%;">
+                    <canvas id="conversionChart"></canvas>
+                </div>
+            </div>
+
             <!-- TOP PRODUCTS -->
             <div class="chart-section">
                 <h2>Top Performing Products</h2>
@@ -192,6 +199,60 @@ function logout() {
         window.location.href = 'logout.php';
     }
 }
+
+// Chart.js initialization
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('conversionChart').getContext('2d');
+    
+    // Prepare Data
+    const products = <?php echo json_encode(array_slice($topProducts, 0, 10)); ?>;
+    const labels = products.map(p => p.title.substring(0, 20) + (p.title.length > 20 ? '...' : ''));
+    const viewsData = products.map(p => p.views || 0);
+    const ordersData = products.map(p => p.orders || 0);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Views',
+                    data: viewsData,
+                    backgroundColor: 'rgba(78, 163, 255, 0.5)',
+                    borderColor: 'rgba(78, 163, 255, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Orders',
+                    data: ordersData,
+                    backgroundColor: 'rgba(76, 175, 80, 0.5)',
+                    borderColor: 'rgba(76, 175, 80, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#f4f4f5' }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#a1a1aa' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#a1a1aa' }
+                }
+            }
+        }
+    });
+});
 </script>
 
 </body>
