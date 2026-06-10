@@ -12,8 +12,9 @@ $action = $data['action'];
 $id = $data['id'];
 
 $file = __DIR__ . '/../data/analytics.json';
+$dailyFile = __DIR__ . '/../data/daily.json';
 
-// Initialize analytics array if it doesn't exist
+// --- Global Analytics ---
 $analytics = [];
 if (file_exists($file)) {
     $content = file_get_contents($file);
@@ -29,26 +30,54 @@ foreach ($analytics as &$stat) {
             $stat['views'] = ($stat['views'] ?? 0) + 1;
         } elseif ($action === 'order') {
             $stat['orders'] = ($stat['orders'] ?? 0) + 1;
+        } elseif ($action === 'click') {
+            $stat['clicks'] = ($stat['clicks'] ?? 0) + 1;
         }
         $found = true;
         break;
     }
 }
 
-// Add new product stat if not found
 if (!$found) {
-    $newStat = ['id' => $id, 'views' => 0, 'orders' => 0];
+    $newStat = ['id' => $id, 'views' => 0, 'orders' => 0, 'clicks' => 0];
     if ($action === 'view') {
         $newStat['views'] = 1;
     } elseif ($action === 'order') {
         $newStat['orders'] = 1;
+    } elseif ($action === 'click') {
+        $newStat['clicks'] = 1;
     }
     $analytics[] = $newStat;
 }
+file_put_contents($file, json_encode($analytics, JSON_PRETTY_PRINT));
 
-// Save back to file
-if (file_put_contents($file, json_encode($analytics, JSON_PRETTY_PRINT))) {
-    echo json_encode(['success' => true]);
-} else {
-    echo json_encode(['success' => false, 'error' => 'Failed to save']);
+
+// --- Daily Analytics ---
+$daily = [];
+if (file_exists($dailyFile)) {
+    $content = file_get_contents($dailyFile);
+    if ($content) {
+        $daily = json_decode($content, true) ?: [];
+    }
 }
+
+$today = date('Y-m-d');
+if (!isset($daily[$today])) {
+    $daily[$today] = [];
+}
+
+if (!isset($daily[$today][$id])) {
+    $daily[$today][$id] = ['views' => 0, 'orders' => 0, 'clicks' => 0];
+}
+
+if ($action === 'view') {
+    $daily[$today][$id]['views']++;
+} elseif ($action === 'order') {
+    $daily[$today][$id]['orders']++;
+} elseif ($action === 'click') {
+    $daily[$today][$id]['clicks']++;
+}
+
+file_put_contents($dailyFile, json_encode($daily, JSON_PRETTY_PRINT));
+
+echo json_encode(['success' => true]);

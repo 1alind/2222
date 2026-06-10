@@ -64,6 +64,13 @@ const urlDatabase = {
 function openUrl(platform) {
     const destinationUrl = urlDatabase[platform];
     if (destinationUrl) {
+        // Track the click to our backend API asynchronously
+        fetch('./shop/track.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: platform, action: 'click' })
+        }).catch(e => console.error('Tracking error:', e));
+
         window.open(destinationUrl, '_blank');
     }
 }
