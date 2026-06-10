@@ -91,6 +91,13 @@ function changeSlide(productId, direction, event) {
         left: scrollAmount,
         behavior: 'smooth'
     });
+    
+    // Track Swipe Action
+    fetch('track.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: productId, action: 'swipe' })
+    }).catch(e => console.error('Tracking error:', e));
 }
 
 // تحديث نقاط التتبع (Dots) فوراً وتلقائياً عند السحب باليد (Touch Swipe)
@@ -112,6 +119,17 @@ function initSliderScrollListeners() {
                     dot.classList.remove('active');
                 }
             });
+            
+            // Track swipe when using touch/scrolling
+            const lastIndex = slider.getAttribute('data-last-index') || 0;
+            if (currentIndex != lastIndex) {
+                slider.setAttribute('data-last-index', currentIndex);
+                fetch('track.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: card.id, action: 'swipe' })
+                }).catch(e => console.error('Tracking error:', e));
+            }
         });
     });
 }
@@ -189,14 +207,15 @@ function submitToWhatsApp() {
     message += "🔢 " + labelQty + qty + "x\n";
     if(hasSize) message += "📏 " + labelSize + selectedSize + "\n";
     
-    // Track Order
+    // Track WhatsApp Click
     fetch('track.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: currentOrder.id, action: 'order' })
+        body: JSON.stringify({ id: currentOrder.id, action: 'whatsapp' })
     }).catch(e => console.error('Tracking error:', e));
     
-    window.open("https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message), '_blank');
+    const whatsappLink = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+    window.open(whatsappLink, '_blank');
     closeModal();
 }
 

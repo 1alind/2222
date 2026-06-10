@@ -215,6 +215,23 @@ usort($topProducts, fn($a, $b) => ($b['orders'] ?? 0) - ($a['orders'] ?? 0));
                 </div>
             </div>
 
+            <!-- SWIPES & WHATSAPP ROW -->
+            <div class="charts-row" style="margin-bottom: 30px;">
+                <div class="chart-section">
+                    <h2>Image Swipes (Top Products)</h2>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="swipesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-section">
+                    <h2>WhatsApp Clicks (Top Products)</h2>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="whatsappChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
             <!-- TOP PRODUCTS -->
             <div class="chart-section">
                 <h2>Top Performing Products</h2>
@@ -406,6 +423,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const labels1 = products.map(p => p.title.substring(0, 15) + (p.title.length > 15 ? '...' : ''));
     const viewsData = products.map(p => p.views || 0);
     const ordersData = products.map(p => p.orders || 0);
+    const swipesData = products.map(p => p.swipes || 0);
+    const whatsappData = products.map(p => p.whatsapp || 0);
 
     new Chart(ctx1, {
         type: 'bar',
@@ -472,6 +491,55 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // --- 3. Swipes Chart ---
+    const ctx3 = document.getElementById('swipesChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: labels1,
+            datasets: [{
+                label: 'Image Swipes',
+                data: swipesData,
+                backgroundColor: 'rgba(255, 152, 0, 0.5)',
+                borderColor: 'rgba(255, 152, 0, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#f4f4f5' } } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#a1a1aa' } },
+                x: { grid: { display: false }, ticks: { color: '#a1a1aa' } }
+            }
+        }
+    });
+
+    // --- 4. WhatsApp Clicks Chart ---
+    const ctx4 = document.getElementById('whatsappChart').getContext('2d');
+    new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            labels: labels1,
+            datasets: [{
+                label: 'WhatsApp Clicks',
+                data: whatsappData,
+                backgroundColor: 'rgba(37, 211, 102, 0.5)',
+                borderColor: 'rgba(37, 211, 102, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#f4f4f5' } } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#a1a1aa' } },
+                x: { grid: { display: false }, ticks: { color: '#a1a1aa' } }
+            }
+        }
+    });
+
 });
 </script>
 
