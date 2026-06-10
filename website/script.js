@@ -49,9 +49,11 @@ function changeEmoji() {
 
 setInterval(changeEmoji, 2000);
 
+const actualPhone = typeof storeSettings !== 'undefined' ? storeSettings.whatsapp_number : "9647501859616";
+
 // Pure JSON data mapping for your URLs
 const urlDatabase = {
-    "whatsapp": "https://wa.me/" + (typeof storeSettings !== 'undefined' ? storeSettings.whatsapp_number : "9647501859616"),
+    "whatsapp": "https://wa.me/" + actualPhone + "?text=" + encodeURIComponent("I'm interested in"),
     "instagram": typeof storeSettings !== 'undefined' ? storeSettings.instagram : "https://instagram.com/22show_",
     "tiktok": typeof storeSettings !== 'undefined' ? storeSettings.tiktok : "https://www.tiktok.com/@22show_",
     "snapchat": typeof storeSettings !== 'undefined' ? storeSettings.snapchat : "https://www.snapchat.com/@twenty2_show",
@@ -134,7 +136,7 @@ async function saveContact() {
         // 2. Contact data
         const contact = {
             name: typeof storeSettings !== 'undefined' ? storeSettings.store_name : "22 Show",
-            phone: "+" + urlDatabase.whatsapp.replace("https://wa.me/", ""),
+            phone: "+" + actualPhone,
             latitude: typeof storeSettings !== 'undefined' ? storeSettings.latitude : "36.850062",
             longitude: typeof storeSettings !== 'undefined' ? storeSettings.longitude : "43.038856",
             googleMapsUrl: urlDatabase.googlemaps,
