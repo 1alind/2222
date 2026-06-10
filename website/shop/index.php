@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>22 Show - Shop</title>
+    <title><?php 
+        $settingsFile = __DIR__ . '/../data/settings.json';
+        $settings = file_exists($settingsFile) ? json_decode(file_get_contents($settingsFile), true) : [];
+        echo htmlspecialchars($settings['store_name'] ?? '22 Show'); 
+    ?> - Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="shop-style.css?v=<?php echo time(); ?>">
+    <script>
+        const storeSettings = <?php echo json_encode($settings); ?>;
+    </script>
 </head>
 <body class="lang-badini">
 

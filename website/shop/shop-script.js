@@ -180,24 +180,25 @@ function updateQty(amount) {
 
 function submitToWhatsApp() {
     const currentLang = localStorage.getItem('selectedLanguage') || 'badini';
-    const phoneNumber = "964750XXXXXXX"; // ضع رقم متجرك هنا
+    const phoneNumber = (typeof storeSettings !== 'undefined' && storeSettings.whatsapp_number) ? storeSettings.whatsapp_number : "9647501859616";
     
     const qty = document.getElementById('prodQty').value;
     const sizeSelect = document.getElementById('prodSize');
     const hasSize = (document.getElementById('sizeGroup').style.display !== 'none');
     const selectedSize = hasSize ? sizeSelect.value : '';
 
-    let msgHello = "سلاڤ 22 Show، حەز دكەم ڤي تشتي داوا بكەم:\n\n";
+    const storeName = (typeof storeSettings !== 'undefined' && storeSettings.store_name) ? storeSettings.store_name : "22 Show";
+    let msgHello = "سلاڤ " + storeName + "، حەز دكەم ڤي تشتي داوا بكەم:\n\n";
     let labelItem = "ناڤێ تشتي: "; let labelPrice = "بهایێ یەکەیێ: "; let labelQty = "چەند دانە: "; let labelSize = "قیاس: ";
 
     if(currentLang === 'sorani') {
-        msgHello = "سلاو 22 Show، حەزم لێیە ئەم داواکارییە بکەم:\n\n";
+        msgHello = "سلاو " + storeName + "، حەزم لێیە ئەم داواکارییە بکەم:\n\n";
         labelItem = "ناوى کاڵا: "; labelPrice = "نرخی تاک: "; labelQty = "ژمارە: "; labelSize = "قەبارە: ";
     } else if(currentLang === 'arabic') {
-        msgHello = "مرحبا 22 Show، أود طلب هذا المنتج بالخيارات التالية:\n\n";
+        msgHello = "مرحبا " + storeName + "، أود طلب هذا المنتج بالخيارات التالية:\n\n";
         labelItem = "اسم المنتج: "; labelPrice = "سعر القطعة: "; labelQty = "الكمية المطلوبة: "; labelSize = "القياس المحدد: ";
     } else if(currentLang === 'english') {
-        msgHello = "Hello 22 Show, I would like to order this item:\n\n";
+        msgHello = "Hello " + storeName + ", I would like to order this item:\n\n";
         labelItem = "Product Name: "; labelPrice = "Price per Unit: "; labelQty = "Quantity: "; labelSize = "Selected Size: ";
     }
 

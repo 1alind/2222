@@ -101,6 +101,11 @@ $totalOrders = array_sum(array_column($analytics, 'orders'));
             <span class="admin-card-text">View Analytics</span>
         </a>
 
+        <a href="settings.php" class="admin-card">
+            <i class="fas fa-cog"></i>
+            <span class="admin-card-text">Store Settings</span>
+        </a>
+
         <button class="admin-card" onclick="logout()" style="border: 1px solid rgba(244, 67, 54, 0.3);">
             <i class="fas fa-sign-out-alt" style="color: #f44336;"></i>
             <span class="admin-card-text" style="color: #f44336;">Logout</span>

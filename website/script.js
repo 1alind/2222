@@ -51,12 +51,12 @@ setInterval(changeEmoji, 2000);
 
 // Pure JSON data mapping for your URLs
 const urlDatabase = {
-    "whatsapp": "https://wa.me/9647501859616",
-    "instagram": "https://instagram.com/22show_",
-    "tiktok": "https://www.tiktok.com/@22show_",
-    "snapchat": "https://www.snapchat.com/@twenty2_show",
-    "applemaps": "https://maps.apple.com/place?address=Kurdistan%20Salh,%20Duhok,%20Iraq&coordinate=36.850062,43.038856&name=22%20Show&place-id=I81229B1DA5447AFB&map=explore",
-    "googlemaps": "https://maps.app.goo.gl/G7xczmrF6BWAdxoCA",
+    "whatsapp": "https://wa.me/" + (typeof storeSettings !== 'undefined' ? storeSettings.whatsapp_number : "9647501859616"),
+    "instagram": typeof storeSettings !== 'undefined' ? storeSettings.instagram : "https://instagram.com/22show_",
+    "tiktok": typeof storeSettings !== 'undefined' ? storeSettings.tiktok : "https://www.tiktok.com/@22show_",
+    "snapchat": typeof storeSettings !== 'undefined' ? storeSettings.snapchat : "https://www.snapchat.com/@twenty2_show",
+    "applemaps": typeof storeSettings !== 'undefined' ? storeSettings.apple_maps : "https://maps.apple.com/...",
+    "googlemaps": typeof storeSettings !== 'undefined' ? storeSettings.google_maps : "https://maps.app.goo.gl/G7xczmrF6BWAdxoCA",
     "shop": "./shop"
 };
 
@@ -133,10 +133,10 @@ async function saveContact() {
 
         // 2. Contact data
         const contact = {
-            name: "22 Show",
+            name: typeof storeSettings !== 'undefined' ? storeSettings.store_name : "22 Show",
             phone: "+" + urlDatabase.whatsapp.replace("https://wa.me/", ""),
-            latitude: "36.850062",
-            longitude: "43.038856",
+            latitude: typeof storeSettings !== 'undefined' ? storeSettings.latitude : "36.850062",
+            longitude: typeof storeSettings !== 'undefined' ? storeSettings.longitude : "43.038856",
             googleMapsUrl: urlDatabase.googlemaps,
             appleMapsUrl: urlDatabase.applemaps,
             instagram: urlDatabase.instagram,
