@@ -189,14 +189,45 @@ function submitToWhatsApp() {
     message += "🔢 " + labelQty + qty + "x\n";
     if(hasSize) message += "📏 " + labelSize + selectedSize + "\n";
     
+    // Track Order
+    fetch('track.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: currentOrder.id, action: 'order' })
+    }).catch(e => console.error('Tracking error:', e));
+    
     window.open("https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message), '_blank');
     closeModal();
+}
+
+function initViewTracking() {
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const prodId = entry.target.id;
+                // Track View
+                fetch('track.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: prodId, action: 'view' })
+                }).catch(e => console.error('Tracking error:', e));
+                
+                // Stop observing once viewed
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 }); // Trigger when 50% of the product card is visible
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        observer.observe(card);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'badini';
     switchLanguage(savedLang);
     initSliderScrollListeners();
+    initViewTracking();
     
     window.onclick = function(event) {
         const modal = document.getElementById('orderModal');
