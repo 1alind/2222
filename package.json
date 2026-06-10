@@ -1,0 +1,13 @@
+{
+  "name": "php-links",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'PHP project, no node server'",
+    "build": "echo 'No build needed'",
+    "lint": "echo 'No lint needed'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
