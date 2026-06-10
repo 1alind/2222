@@ -286,94 +286,113 @@ document.addEventListener('DOMContentLoaded', function() {
     }));
 
     const container = document.getElementById('d3-line-chart');
-    const margin = {top: 20, right: 30, bottom: 30, left: 40};
-    const width = container.clientWidth - margin.left - margin.right;
-    const height = 350 - margin.top - margin.bottom;
 
     // Create Tooltip
     const tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    const svg = d3.select("#d3-line-chart")
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // X axis
-    const x = d3.scaleTime()
-      .domain(d3.extent(data, d => d.date))
-      .range([ 0, width ]);
-      
-    svg.append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x).ticks(6).tickFormat(d3.timeFormat("%b %d")))
-      .attr("class", "axis-label");
-
-    // Y axis
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.clicks) * 1.2]) // buffer at top
-      .range([ height, 0 ]);
-      
-    svg.append("g")
-      .call(d3.axisLeft(y).ticks(5))
-      .attr("class", "axis-label");
-
-    // Add the area
-    svg.append("path")
-      .datum(data)
-      .attr("class", "area")
-      .attr("d", d3.area()
-        .x(d => x(d.date))
-        .y0(height)
-        .y1(d => y(d.clicks))
-        .curve(d3.curveMonotoneX)
-        );
-
-    // Add the line
-    svg.append("path")
-      .datum(data)
-      .attr("class", "line")
-      .attr("d", d3.line()
-        .x(d => x(d.date))
-        .y(d => y(d.clicks))
-        .curve(d3.curveMonotoneX)
-        );
-
-    // Add circles
-    svg.selectAll("myCircles")
-      .data(data)
-      .enter()
-      .append("circle")
-        .attr("fill", "#00e5ff")
-        .attr("stroke", "none")
-        .attr("cx", d => x(d.date))
-        .attr("cy", d => y(d.clicks))
-        .attr("r", 4)
-        .on("mouseover", function(event, d) {
-            d3.select(this).attr("r", 7);
-            tooltip.transition()
-                .duration(200)
-                .style("opacity", 1);
-            tooltip.html(`Date: ${d3.timeFormat("%b %d")(d.date)}<br/>Clicks: <b>${d.clicks}</b>`)
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", function(d) {
-            d3.select(this).attr("r", 4);
-            tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+    function drawChart() {
+        d3.select("#d3-line-chart").selectAll("*").remove();
         
-    // Handle resize
-    window.addEventListener("resize", () => {
-        d3.select("#d3-line-chart svg").remove();
-        // Just reload the page for a quick responsive fix since PHP outputs data
-        location.reload(); 
+        const margin = {top: 20, right: 30, bottom: 30, left: 40};
+        const width = container.clientWidth - margin.left - margin.right;
+        const height = 350 - margin.top - margin.bottom;
+
+        const svg = d3.select("#d3-line-chart")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // X axis
+        const x = d3.scaleTime()
+          .domain(d3.extent(data, d => d.date))
+          .range([ 0, width ]);
+          
+        svg.append("g")
+          .attr("transform", `translate(0, ${height})`)
+          .call(d3.axisBottom(x).ticks(6).tickFormat(d3.timeFormat("%b %d")))
+          .attr("class", "axis-label");
+
+        // Y axis
+        const y = d3.scaleLinear()
+          .domain([0, d3.max(data, d => d.clicks) * 1.2]) // buffer at top
+          .range([ height, 0 ]);
+          
+        svg.append("g")
+          .call(d3.axisLeft(y).ticks(5))
+          .attr("class", "axis-label");
+
+        // Add the area
+        svg.append("path")
+          .datum(data)
+          .attr("class", "area")
+          .attr("d", d3.area()
+            .x(d => x(d.date))
+            .y0(height)
+            .y1(d => y(d.clicks))
+            .curve(d3.curveMonotoneX)
+            );
+
+        // Add the line
+        svg.append("path")
+          .datum(data)
+          .attr("class", "line")
+          .attr("d", d3.line()
+            .x(d => x(d.date))
+            .y(d => y(d.clicks))
+            .curve(d3.curveMonotoneX)
+            );
+
+        // Add circles
+        svg.selectAll("myCircles")
+          .data(data)
+          .enter()
+          .append("circle")
+            .attr("fill", "#00e5ff")
+            .attr("stroke", "none")
+            .attr("cx", d => x(d.date))
+            .attr("cy", d => y(d.clicks))
+            .attr("r", 4)
+            .on("mouseover", function(event, d) {
+                d3.select(this).attr("r", 7);
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 1);
+                tooltip.html(`Date: ${d3.timeFormat("%b %d")(d.date)}<br/>Clicks: <b>${d.clicks}</b>`)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                d3.select(this).attr("r", 4);
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+    }
+
+    drawChart();
+        
+    // Handle resize without refreshing constantly on scroll (especially mobile)
+    let lastWidth = container.clientWidth;
+    let resizeTimer;
+    
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            const newWidth = entry.contentRect.width;
+            if (newWidth > 0 && Math.abs(newWidth - lastWidth) > 10) {
+                lastWidth = newWidth;
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    drawChart();
+                }, 100);
+            }
+        }
     });
+    
+    resizeObserver.observe(container);
 });
 
 // ==========================================
