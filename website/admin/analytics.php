@@ -22,13 +22,29 @@ $products = loadJSON(PRODUCTS_FILE);
 $analytics = loadJSON(ANALYTICS_FILE);
 $daily = loadJSON(DAILY_FILE);
 
+// Handle date constraints
+$startDate = $_GET['start_date'] ?? date('Y-m-d', strtotime('-30 days'));
+$endDate = $_GET['end_date'] ?? date('Y-m-d');
+
+$startTimestamp = strtotime($startDate);
+$endTimestamp = strtotime($endDate);
+
+if (!$startTimestamp || !$endTimestamp || $startTimestamp > $endTimestamp) {
+    $startTimestamp = strtotime('-30 days');
+    $endTimestamp = time();
+    $startDate = date('Y-m-d', $startTimestamp);
+    $endDate = date('Y-m-d', $endTimestamp);
+}
+
+$daysDiff = floor(($endTimestamp - $startTimestamp) / 86400);
+if ($daysDiff > 365) $daysDiff = 365;
+
 // Daily mockup logic if short on days
 $thirtyDaysData = [];
-$today = time();
 $platforms = ['whatsapp', 'instagram', 'tiktok', 'snapchat', 'shop'];
 
-for ($i = 29; $i >= 0; $i--) {
-    $dateStr = date('Y-m-d', $today - ($i * 86400));
+for ($i = $daysDiff; $i >= 0; $i--) {
+    $dateStr = date('Y-m-d', $endTimestamp - ($i * 86400));
     $dayClicks = 0;
     if (isset($daily[$dateStr])) {
         // sum clicks
@@ -58,19 +74,34 @@ foreach ($products as $p) {
     }
 }
 
-// Calculate general stats
+// Calculate general stats based on selected date range from daily.json
 $totalViews = 0;
 $totalOrders = 0;
 $topProducts = [];
+$aggregatedStats = [];
 
-$analyticsMap = [];
-foreach ($analytics as $stat) {
-    $analyticsMap[$stat['id']] = $stat;
+for ($i = $daysDiff; $i >= 0; $i--) {
+    $dateStr = date('Y-m-d', $endTimestamp - ($i * 86400));
+    if (isset($daily[$dateStr])) {
+        foreach($daily[$dateStr] as $pid => $pdata) {
+            if (!isset($aggregatedStats[$pid])) {
+                $aggregatedStats[$pid] = ['id' => $pid, 'views' => 0, 'orders' => 0, 'clicks' => 0, 'swipes' => 0, 'whatsapp' => 0];
+            }
+            $aggregatedStats[$pid]['views'] += $pdata['views'] ?? 0;
+            $aggregatedStats[$pid]['orders'] += $pdata['orders'] ?? 0;
+            $aggregatedStats[$pid]['clicks'] += $pdata['clicks'] ?? 0;
+            $aggregatedStats[$pid]['swipes'] += $pdata['swipes'] ?? 0;
+            $aggregatedStats[$pid]['whatsapp'] += $pdata['whatsapp'] ?? 0;
+        }
+    }
+}
+
+foreach ($aggregatedStats as $pid => $stat) {
     $totalViews += $stat['views'] ?? 0;
     $totalOrders += $stat['orders'] ?? 0;
     
-    if (isset($productCategories[$stat['id']])) {
-        $type = $productCategories[$stat['id']];
+    if (isset($productCategories[$pid])) {
+        $type = $productCategories[$pid];
         $categoryStats[$type] += $stat['views'] ?? 0;
     }
 }
@@ -83,7 +114,7 @@ if (array_sum($categoryStats) === 0) {
 }
 
 foreach ($products as $product) {
-    $stat = $analyticsMap[$product['id']] ?? ['id' => $product['id'], 'views' => 0, 'orders' => 0];
+    $stat = $aggregatedStats[$product['id']] ?? ['id' => $product['id'], 'views' => 0, 'orders' => 0, 'swipes' => 0, 'whatsapp' => 0];
     $stat['title'] = $product['title']['english'] ?? 'N/A';
     $topProducts[] = $stat;
 }
@@ -152,8 +183,14 @@ usort($topProducts, fn($a, $b) => ($b['orders'] ?? 0) - ($a['orders'] ?? 0));
     <div class="main-content">
         
         <!-- TOP BAR -->
-        <div class="topbar">
+        <div class="topbar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
             <h1>Analytics & Reports</h1>
+            <form method="GET" action="analytics.php" style="display: flex; gap: 10px; align-items: center;">
+                <input type="date" name="start_date" value="<?php echo htmlspecialchars($startDate); ?>" style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.05); color: #fff; outline: none; font-family: inherit;">
+                <span style="color: #a1a1aa;">to</span>
+                <input type="date" name="end_date" value="<?php echo htmlspecialchars($endDate); ?>" style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.05); color: #fff; outline: none; font-family: inherit;">
+                <button type="submit" style="background: var(--neon-cyan); color: #000; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold;"><i class="fas fa-filter"></i> Apply</button>
+            </form>
         </div>
         
         <!-- CONTENT -->
@@ -194,7 +231,7 @@ usort($topProducts, fn($a, $b) => ($b['orders'] ?? 0) - ($a['orders'] ?? 0));
             
             <!-- D3 CHART LINE -->
             <div class="chart-section" style="margin-bottom: 30px;">
-                <h2>Link Click-Through Trends (Last 30 Days)</h2>
+                <h2>Link Click-Through Trends (<?php echo htmlspecialchars($startDate); ?> to <?php echo htmlspecialchars($endDate); ?>)</h2>
                 <div id="d3-line-chart" style="width: 100%; height: 350px; position: relative;"></div>
             </div>
 

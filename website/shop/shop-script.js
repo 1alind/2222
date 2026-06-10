@@ -151,7 +151,18 @@ function openOrderModal(productId) {
     const sizeGroup = document.getElementById('sizeGroup');
     sizeSelect.innerHTML = '';
 
-    if (currentOrder.type === 'shoes') {
+    let customSizesData = card.getAttribute('data-sizes');
+    let customMlData = card.getAttribute('data-ml');
+    let customSizes = customSizesData ? JSON.parse(customSizesData) : null;
+    let customMl = customMlData ? JSON.parse(customMlData) : null;
+
+    if (customSizes && customSizes.length > 0) {
+        sizeGroup.style.display = 'flex';
+        customSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
+    } else if (customMl && customMl.length > 0) {
+        sizeGroup.style.display = 'flex';
+        customMl.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
+    } else if (currentOrder.type === 'shoes') {
         sizeGroup.style.display = 'flex';
         const shoeSizes = ['39', '40', '41', '42', '43', '44', '45'];
         shoeSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });

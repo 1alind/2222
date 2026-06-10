@@ -24,9 +24,12 @@ if ($products && is_array($products)) {
         $desc_sorani = htmlspecialchars($product['desc']['sorani']);
         $desc_arabic = htmlspecialchars($product['desc']['arabic']);
         $desc_english = htmlspecialchars($product['desc']['english']);
+        
+        $sizes_attr = isset($product['sizes']) && is_array($product['sizes']) ? htmlspecialchars(json_encode($product['sizes'])) : '';
+        $ml_attr = isset($product['ml']) && is_array($product['ml']) ? htmlspecialchars(json_encode($product['ml'])) : '';
         ?>
 
-        <div class="product-card" id="<?php echo $prod_id; ?>" data-type="<?php echo $type; ?>">
+        <div class="product-card" id="<?php echo $prod_id; ?>" data-type="<?php echo $type; ?>" data-sizes="<?php echo $sizes_attr; ?>" data-ml="<?php echo $ml_attr; ?>">
             <div class="product-image-wrapper">
                 <!-- Image Slider -->
                 <div class="images-slider">
@@ -75,8 +78,21 @@ if ($products && is_array($products)) {
                     </p>
                 </div>
                 
-                <div class="product-meta">
+                <div class="product-meta" style="flex-direction: column; align-items: flex-start; gap: 8px;">
                     <span class="price"><?php echo $price; ?></span>
+                    <?php if (isset($product['sizes']) && is_array($product['sizes']) && count($product['sizes']) > 0): ?>
+                        <div class="available-options" style="display: flex; gap: 5px; flex-wrap: wrap;">
+                            <?php foreach($product['sizes'] as $sz): ?>
+                                <span style="font-size: 11px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 4px; color: #a1a1aa; border: 1px solid var(--border-color);"><?php echo htmlspecialchars($sz); ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php elseif (isset($product['ml']) && is_array($product['ml']) && count($product['ml']) > 0): ?>
+                        <div class="available-options" style="display: flex; gap: 5px; flex-wrap: wrap;">
+                            <?php foreach($product['ml'] as $ml): ?>
+                                <span style="font-size: 11px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 4px; color: #a1a1aa; border: 1px solid var(--border-color);"><?php echo htmlspecialchars($ml); ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 
                 <button class="order-btn" onclick="openOrderModal('<?php echo $prod_id; ?>')">

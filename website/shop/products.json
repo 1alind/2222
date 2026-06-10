@@ -4,6 +4,7 @@
         "type": "shoes",
         "badge": "NEW",
         "price": "38,000 د.ع",
+        "sizes": ["40", "41", "42", "43", "44"],
         "images": [
             "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600",
             "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600",
@@ -27,6 +28,7 @@
         "type": "perfume",
         "badge": "BEST",
         "price": "45,000 د.ع",
+        "ml": ["50ml", "100ml"],
         "images": [
             "https://images.unsplash.com/photo-1541643600914-78b084683601?w=600",
             "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=600"
