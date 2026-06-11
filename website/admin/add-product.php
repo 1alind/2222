@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'badge' => $badge,
                 'price' => $price,
                 'images' => [],
+                'created_at' => time(),
                 'title' => [
                     'badini' => $_POST['title_badini'] ?? '',
                     'sorani' => $_POST['title_sorani'] ?? '',

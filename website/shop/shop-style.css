@@ -188,6 +188,20 @@ body.lang-badini .back-btn i, body.lang-sorani .back-btn i, body.lang-arabic .ba
     border-radius: 6px;
     z-index: 3;
 }
+.product-image-wrapper .badge.badge-new {
+    background: linear-gradient(135deg, #10b981, #059669); /* Green for new */
+    color: #fff;
+}
+.product-image-wrapper .badge.badge-trending {
+    background: linear-gradient(135deg, #ef4444, #b91c1c); /* Red for trending */
+    color: #fff;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
 body.lang-english .badge { right: 10px; left: auto; }
 body.lang-badini .badge, body.lang-sorani .badge, body.lang-arabic .badge { left: 10px; right: auto; }
 

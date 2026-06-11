@@ -1,6 +1,28 @@
 <?php
-$json_data = file_get_contents(__DIR__ . '/products.json');
+$json_data = @file_get_contents(__DIR__ . '/products.json');
 $products = json_decode($json_data, true);
+
+// Get analytics for trending calculation
+$analytics_data = @file_get_contents(__DIR__ . '/../data/analytics.json');
+$analytics = $analytics_data ? json_decode($analytics_data, true) : [];
+$scores = [];
+if (is_array($analytics)) {
+    foreach ($analytics as $stat) {
+        $id = $stat['id'] ?? '';
+        $views = $stat['views'] ?? 0;
+        $orders = $stat['orders'] ?? 0;
+        $clicks = $stat['clicks'] ?? 0;
+        $swipes = $stat['swipes'] ?? 0;
+        $whatsapp = $stat['whatsapp'] ?? 0;
+        // Interactions score formulation
+        $score = $views + $clicks + ($swipes * 2) + ($whatsapp * 5) + ($orders * 5);
+        if ($score > 0) {
+            $scores[$id] = $score;
+        }
+    }
+}
+arsort($scores);
+$trendingIds = array_slice(array_keys($scores), 0, 5); // top 5 products are trending
 
 if ($products && is_array($products)) {
     $groupedProducts = [];
@@ -25,6 +47,18 @@ if ($products && is_array($products)) {
         $prod_id = htmlspecialchars($product['id'] ?? '');
         $price = htmlspecialchars($product['price'] ?? '');
         $badge = htmlspecialchars($product['badge'] ?? '');
+        $created_at = $product['created_at'] ?? 0;
+        
+        // Auto-assign "NEW" if created within 7 days
+        if ($created_at > 0 && (time() - $created_at) <= 7 * 24 * 60 * 60) {
+            $badge = 'NEW';
+        }
+        
+        // Auto-assign "TRENDING" if it's one of the top interacted products and hasn't been overridden by "NEW" or manually
+        if (empty($badge) && in_array($prod_id, $trendingIds) && ($scores[$prod_id] ?? 0) >= 5) {
+            $badge = 'TRENDING';
+        }
+        
         $type = htmlspecialchars($product['type'] ?? 'general');
         $images = $product['images'] ?? [];
         if (!is_array($images)) {
@@ -79,7 +113,16 @@ if ($products && is_array($products)) {
                 <?php endif; ?>
 
                 <?php if (!empty($badge)): ?>
-                    <span class="badge"><?php echo $badge; ?></span>
+                    <?php 
+                        $badgeClass = 'badge';
+                        $uplBadge = strtoupper($badge);
+                        if ($uplBadge === 'NEW') {
+                            $badgeClass .= ' badge-new';
+                        } elseif ($uplBadge === 'TRENDING' || $uplBadge === 'HOT') {
+                            $badgeClass .= ' badge-trending';
+                        }
+                    ?>
+                    <span class="<?php echo $badgeClass; ?>"><?php echo $badge; ?></span>
                 <?php endif; ?>
             </div>
             
