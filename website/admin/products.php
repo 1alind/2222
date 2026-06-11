@@ -133,7 +133,13 @@ $products = loadProducts();
                     <?php foreach ($products as $product): ?>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="<?php echo htmlspecialchars($product['images'][0] ?? ''); ?>" alt="<?php echo htmlspecialchars($product['title']['english'] ?? ''); ?>">
+                                <?php 
+                                $src = $product['images'][0] ?? '';
+                                if (!empty($src) && strpos($src, 'http') !== 0) {
+                                    $src = '../' . $src;
+                                }
+                                ?>
+                                <img src="<?php echo htmlspecialchars($src); ?>" alt="<?php echo htmlspecialchars($product['title']['english'] ?? ''); ?>">
                                 <?php if (isset($product['hidden']) && $product['hidden']): ?>
                                     <div class="hidden-overlay"><i class="fas fa-eye-slash"></i> Hidden</div>
                                 <?php endif; ?>

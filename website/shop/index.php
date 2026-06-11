@@ -49,7 +49,7 @@
         </div>
 
         <!-- شبكة المنتجات (تُجلب ديناميكياً من السكربت المنفصل) -->
-        <div class="products-grid">
+        <div id="shopContent">
             <?php include __DIR__ . '/load-products.php'; ?>
         </div>
 

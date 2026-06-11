@@ -58,8 +58,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $product['desc'] = $_POST['desc'] ?? '';
         
-        if (isset($_POST['images']) && is_array($_POST['images'])) {
-            $product['images'] = array_filter($_POST['images']);
+        if (isset($_POST['existing_images']) && is_array($_POST['existing_images'])) {
+            $product['images'] = array_filter($_POST['existing_images']);
+        } else {
+            $product['images'] = [];
+        }
+
+        // Handle image uploads
+        $uploadDir = __DIR__ . '/../uploads/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        
+        if (!empty($_FILES['images']['name'][0])) {
+            foreach ($_FILES['images']['tmp_name'] as $key => $tmpName) {
+                if (!empty($tmpName)) {
+                    $fileName = time() . '_' . uniqid() . '_' . basename(preg_replace("/[^a-zA-Z0-9.]/", "_", $_FILES['images']['name'][$key]));
+                    $targetPath = $uploadDir . $fileName;
+                    if (move_uploaded_file($tmpName, $targetPath)) {
+                        $product['images'][] = 'uploads/' . $fileName;
+                    }
+                }
+            }
         }
         
         // Update in array
@@ -152,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <?php endif; ?>
             
-            <form method="POST" class="product-form">
+            <form method="POST" class="product-form" enctype="multipart/form-data">
                 
                 <!-- BASIC INFO -->
                 <div class="form-section">
@@ -165,13 +185,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <select name="type">
-                                <option value="general" <?php echo ($product['type'] ?? 'general') === 'general' ? 'selected' : ''; ?>>General</option>
-                                <option value="shoes" <?php echo ($product['type'] ?? 'general') === 'shoes' ? 'selected' : ''; ?>>Shoes</option>
-                                <option value="perfume" <?php echo ($product['type'] ?? 'general') === 'perfume' ? 'selected' : ''; ?>>Perfume</option>
-                                <option value="watch" <?php echo ($product['type'] ?? 'general') === 'watch' ? 'selected' : ''; ?>>Watch</option>
-                                <option value="clothing" <?php echo ($product['type'] ?? 'general') === 'clothing' ? 'selected' : ''; ?>>Clothing</option>
-                            </select>
+                            <input type="text" name="type" placeholder="e.g., shoes, watch, clothing" list="typeList" value="<?php echo htmlspecialchars($product['type'] ?? ''); ?>" required>
+                            <datalist id="typeList">
+                                <option value="general"></option>
+                                <option value="shoes"></option>
+                                <option value="perfume"></option>
+                                <option value="watch"></option>
+                                <option value="clothing"></option>
+                            </datalist>
                         </div>
                         <div class="form-group">
                             <label>Badge</label>
@@ -228,22 +249,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-section">
                     <h2><i class="fas fa-images"></i> Product Images</h2>
                     
-                    <div id="imagesContainer">
+                    <div id="imagesContainer" style="margin-bottom: 15px;">
+                        <p class="section-desc">Existing Images (Uncheck to remove):</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <?php foreach ($product['images'] ?? [] as $img): ?>
-                            <div class="image-input-group">
-                                <input type="url" name="images[]" placeholder="Image URL" value="<?php echo htmlspecialchars($img); ?>">
-                                <button type="button" class="btn-remove" onclick="removeImageInput(this)"><i class="fas fa-trash"></i></button>
+                            <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 8px;">
+                                <?php
+                                $src = $img;
+                                if (strpos($src, 'http') !== 0) {
+                                    $src = '../' . $src;
+                                }
+                                ?>
+                                <img src="<?php echo htmlspecialchars($src); ?>" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 5px;">
+                                <label style="display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; color: #a1a1aa; font-size: 13px;">
+                                    <input type="checkbox" name="existing_images[]" value="<?php echo htmlspecialchars($img); ?>" checked> Keep
+                                </label>
                             </div>
                         <?php endforeach; ?>
-                        <div class="image-input-group">
-                            <input type="url" name="images[]" placeholder="Image URL">
-                            <button type="button" class="btn-remove" onclick="removeImageInput(this)"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
                     
-                    <button type="button" class="btn btn-secondary" onclick="addImageInput()">
-                        <i class="fas fa-plus"></i> Add Another Image
-                    </button>
+                    <div class="form-group">
+                        <label>Upload New Images</label>
+                        <input type="file" name="images[]" accept="image/*" multiple style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: #fff;">
+                    </div>
                 </div>
                 
                 <!-- FORM ACTIONS -->
@@ -261,21 +290,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script>
-function addImageInput() {
-    const container = document.getElementById('imagesContainer');
-    const group = document.createElement('div');
-    group.className = 'image-input-group';
-    group.innerHTML = `
-        <input type="url" name="images[]" placeholder="Image URL">
-        <button type="button" class="btn-remove" onclick="removeImageInput(this)"><i class="fas fa-trash"></i></button>
-    `;
-    container.appendChild(group);
-}
-
-function removeImageInput(btn) {
-    btn.parentElement.remove();
-}
-
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
         window.location.href = 'logout.php';

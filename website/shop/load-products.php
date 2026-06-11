@@ -3,11 +3,24 @@ $json_data = file_get_contents(__DIR__ . '/products.json');
 $products = json_decode($json_data, true);
 
 if ($products && is_array($products)) {
+    $groupedProducts = [];
     foreach ($products as $product) {
-        // Skip hidden products
         if (isset($product['hidden']) && $product['hidden']) {
             continue;
         }
+        $type = isset($product['type']) && !empty(trim($product['type'])) ? trim($product['type']) : 'General';
+        $groupedProducts[$type][] = $product;
+    }
+
+    if (empty($groupedProducts)) {
+        echo '<p style="color: var(--text-secondary); text-align: center;">No products found.</p>';
+    } else {
+        foreach ($groupedProducts as $type => $typeProducts) {
+            echo '<div class="product-category-section" id="category-' . htmlspecialchars(strtolower($type)) . '">';
+            echo '<h2 class="category-title" style="color: #fff; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-top: 40px; margin-bottom: 20px; font-size: 24px; text-transform: uppercase; letter-spacing: 1px;"><i class="fas fa-list" style="color: var(--neon-cyan); margin-right: 10px;"></i>' . htmlspecialchars(ucfirst($type)) . '</h2>';
+            echo '<div class="products-grid">';
+            
+            foreach ($typeProducts as $product) {
         
         $prod_id = htmlspecialchars($product['id']);
         $price = htmlspecialchars($product['price']);
@@ -38,7 +51,11 @@ if ($products && is_array($products)) {
                     <?php 
                     foreach ($images as $index => $img_url) {
                         $active_class = ($index === 0) ? 'active' : '';
-                        echo '<img src="' . htmlspecialchars($img_url) . '" class="slide ' . $active_class . '" alt="Product Image">';
+                        $src = htmlspecialchars($img_url);
+                        if (strpos($src, 'http') !== 0) {
+                            $src = '../' . $src;
+                        }
+                        echo '<img src="' . $src . '" class="slide ' . $active_class . '" alt="Product Image">';
                     }
                     ?>
                 </div>
@@ -104,7 +121,12 @@ if ($products && is_array($products)) {
         </div>
 
         <?php
-    }
+            } // end inner loop
+            ?>
+            </div> <!-- close .products-grid -->
+            </div> <!-- close .product-category-section -->
+            <?php
+        } // end outer loop
 } else {
     echo '<p style="color: var(--text-secondary); text-align: center;">No products found.</p>';
 }

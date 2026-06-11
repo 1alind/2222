@@ -50,9 +50,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'desc' => $_POST['desc'] ?? ''
             ];
             
-            // Handle image URLs
-            if (isset($_POST['images']) && is_array($_POST['images'])) {
-                $product['images'] = array_filter($_POST['images']);
+            // Handle image uploads
+            $uploadDir = __DIR__ . '/../uploads/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            
+            if (!empty($_FILES['images']['name'][0])) {
+                foreach ($_FILES['images']['tmp_name'] as $key => $tmpName) {
+                    if (!empty($tmpName)) {
+                        $fileName = time() . '_' . uniqid() . '_' . basename(preg_replace("/[^a-zA-Z0-9.]/", "_", $_FILES['images']['name'][$key]));
+                        $targetPath = $uploadDir . $fileName;
+                        if (move_uploaded_file($tmpName, $targetPath)) {
+                            $product['images'][] = 'uploads/' . $fileName;
+                        }
+                    }
+                }
             }
             
             $products[] = $product;
@@ -144,7 +157,7 @@ function sanitizeId($str) {
                 </div>
             <?php endif; ?>
             
-            <form method="POST" class="product-form">
+            <form method="POST" class="product-form" enctype="multipart/form-data">
                 
                 <!-- BASIC INFO -->
                 <div class="form-section">
@@ -158,13 +171,14 @@ function sanitizeId($str) {
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <select name="type">
-                                <option value="general">General</option>
-                                <option value="shoes">Shoes</option>
-                                <option value="perfume">Perfume</option>
-                                <option value="watch">Watch</option>
-                                <option value="clothing">Clothing</option>
-                            </select>
+                            <input type="text" name="type" placeholder="e.g., shoes, watch, clothing" list="typeList" required>
+                            <datalist id="typeList">
+                                <option value="general"></option>
+                                <option value="shoes"></option>
+                                <option value="perfume"></option>
+                                <option value="watch"></option>
+                                <option value="clothing"></option>
+                            </datalist>
                         </div>
                         <div class="form-group">
                             <label>Badge</label>
@@ -217,18 +231,11 @@ function sanitizeId($str) {
                 <!-- IMAGES -->
                 <div class="form-section">
                     <h2><i class="fas fa-images"></i> Product Images</h2>
-                    <p class="section-desc">Add image URLs (at least one image required)</p>
+                    <p class="section-desc">Upload one or more images</p>
                     
-                    <div id="imagesContainer">
-                        <div class="image-input-group">
-                            <input type="url" name="images[]" placeholder="Image URL" required>
-                            <button type="button" class="btn-remove" onclick="removeImageInput(this)"><i class="fas fa-trash"></i></button>
-                        </div>
+                    <div class="form-group">
+                        <input type="file" name="images[]" accept="image/*" multiple required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: #fff;">
                     </div>
-                    
-                    <button type="button" class="btn btn-secondary" onclick="addImageInput()">
-                        <i class="fas fa-plus"></i> Add Another Image
-                    </button>
                 </div>
                 
                 <!-- FORM ACTIONS -->
@@ -246,21 +253,6 @@ function sanitizeId($str) {
 </div>
 
 <script>
-function addImageInput() {
-    const container = document.getElementById('imagesContainer');
-    const group = document.createElement('div');
-    group.className = 'image-input-group';
-    group.innerHTML = `
-        <input type="url" name="images[]" placeholder="Image URL">
-        <button type="button" class="btn-remove" onclick="removeImageInput(this)"><i class="fas fa-trash"></i></button>
-    `;
-    container.appendChild(group);
-}
-
-function removeImageInput(btn) {
-    btn.parentElement.remove();
-}
-
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
         window.location.href = 'logout.php';
