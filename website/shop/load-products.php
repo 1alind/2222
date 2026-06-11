@@ -22,18 +22,23 @@ if ($products && is_array($products)) {
             
             foreach ($typeProducts as $product) {
         
-        $prod_id = htmlspecialchars($product['id']);
-        $price = htmlspecialchars($product['price']);
-        $badge = htmlspecialchars($product['badge']);
-        $type = isset($product['type']) ? htmlspecialchars($product['type']) : 'general';
-        $images = $product['images'];
+        $prod_id = htmlspecialchars($product['id'] ?? '');
+        $price = htmlspecialchars($product['price'] ?? '');
+        $badge = htmlspecialchars($product['badge'] ?? '');
+        $type = htmlspecialchars($product['type'] ?? 'general');
+        $images = $product['images'] ?? [];
+        if (!is_array($images)) {
+            $images = !empty($images) ? [$images] : [];
+        }
         
-        $title_badini = htmlspecialchars($product['title']['badini']);
-        $title_sorani = htmlspecialchars($product['title']['sorani']);
-        $title_arabic = htmlspecialchars($product['title']['arabic']);
-        $title_english = htmlspecialchars($product['title']['english']);
+        $title = $product['title'] ?? [];
+        $title_badini = htmlspecialchars($title['badini'] ?? '');
+        $title_sorani = htmlspecialchars($title['sorani'] ?? '');
+        $title_arabic = htmlspecialchars($title['arabic'] ?? '');
+        $title_english = htmlspecialchars($title['english'] ?? '');
         
-        $desc_raw = is_array($product['desc']) ? ($product['desc']['badini'] ?? '') : ($product['desc'] ?? '');
+        $desc_val = $product['desc'] ?? '';
+        $desc_raw = is_array($desc_val) ? ($desc_val['badini'] ?? '') : $desc_val;
         $desc_html = nl2br(htmlspecialchars($desc_raw));
         $desc_badini = $desc_html;
         $desc_sorani = $desc_html;
@@ -127,6 +132,7 @@ if ($products && is_array($products)) {
             </div> <!-- close .product-category-section -->
             <?php
         } // end outer loop
+    } // end else
 } else {
     echo '<p style="color: var(--text-secondary); text-align: center;">No products found.</p>';
 }

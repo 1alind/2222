@@ -67,7 +67,7 @@ function switchLanguage(lang) {
         const btnTextEl = card.querySelector('.order-btn .btn-text');
 
         if(titleEl && titleEl.getAttribute('data-' + lang)) titleEl.textContent = titleEl.getAttribute('data-' + lang);
-        if(descEl && descEl.getAttribute('data-' + lang)) descEl.textContent = descEl.getAttribute('data-' + lang);
+        if(descEl && descEl.getAttribute('data-' + lang)) descEl.innerHTML = descEl.getAttribute('data-' + lang);
         if(btnTextEl) btnTextEl.textContent = staticTranslations[lang].orderBtn;
     });
 
