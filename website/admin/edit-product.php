@@ -185,14 +185,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <input type="text" name="type" placeholder="e.g., shoes, watch, clothing" list="typeList" value="<?php echo htmlspecialchars($product['type'] ?? ''); ?>" required>
-                            <datalist id="typeList">
-                                <option value="general"></option>
-                                <option value="shoes"></option>
-                                <option value="perfume"></option>
-                                <option value="watch"></option>
-                                <option value="clothing"></option>
-                            </datalist>
+                            <select name="type" required>
+                                <option value="general" <?php echo ($product['type'] ?? 'general') === 'general' ? 'selected' : ''; ?>>General</option>
+                                <option value="shoes" <?php echo ($product['type'] ?? 'general') === 'shoes' ? 'selected' : ''; ?>>Shoes</option>
+                                <option value="perfume" <?php echo ($product['type'] ?? 'general') === 'perfume' ? 'selected' : ''; ?>>Perfume</option>
+                                <option value="watch" <?php echo ($product['type'] ?? 'general') === 'watch' ? 'selected' : ''; ?>>Watch</option>
+                                <option value="clothing" <?php echo ($product['type'] ?? 'general') === 'clothing' ? 'selected' : ''; ?>>Clothing</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Badge</label>

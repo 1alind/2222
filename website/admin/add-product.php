@@ -172,14 +172,13 @@ function sanitizeId($str) {
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <input type="text" name="type" placeholder="e.g., shoes, watch, clothing" list="typeList" required>
-                            <datalist id="typeList">
-                                <option value="general"></option>
-                                <option value="shoes"></option>
-                                <option value="perfume"></option>
-                                <option value="watch"></option>
-                                <option value="clothing"></option>
-                            </datalist>
+                            <select name="type" required>
+                                <option value="general">General</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="perfume">Perfume</option>
+                                <option value="watch">Watch</option>
+                                <option value="clothing">Clothing</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Badge</label>
