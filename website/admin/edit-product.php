@@ -56,29 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'english' => $_POST['title_english'] ?? ''
         ];
         
-        $product['desc'] = [
-            'badini' => $_POST['desc_badini'] ?? '',
-            'sorani' => $_POST['desc_sorani'] ?? '',
-            'arabic' => $_POST['desc_arabic'] ?? '',
-            'english' => $_POST['desc_english'] ?? ''
-        ];
+        $product['desc'] = $_POST['desc'] ?? '';
         
         if (isset($_POST['images']) && is_array($_POST['images'])) {
             $product['images'] = array_filter($_POST['images']);
-        }
-        
-        $sizes_input = $_POST['sizes'] ?? '';
-        if (trim($sizes_input) !== '') {
-            $product['sizes'] = array_map('trim', explode(',', $sizes_input));
-        } else {
-            unset($product['sizes']);
-        }
-
-        $ml_input = $_POST['ml'] ?? '';
-        if (trim($ml_input) !== '') {
-            $product['ml'] = array_map('trim', explode(',', $ml_input));
-        } else {
-            unset($product['ml']);
         }
         
         // Update in array
@@ -200,14 +181,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label>Price *</label>
                             <input type="text" name="price" value="<?php echo htmlspecialchars($product['price'] ?? ''); ?>" required>
                         </div>
-                        <div class="form-group">
-                            <label>Sizes (shoes/clothes) - comma separated</label>
-                            <input type="text" name="sizes" value="<?php echo isset($product['sizes']) && is_array($product['sizes']) ? htmlspecialchars(implode(', ', $product['sizes'])) : ''; ?>" placeholder="e.g. 40, 41, 42">
-                        </div>
-                        <div class="form-group">
-                            <label>Volumes (perfumes) - comma separated</label>
-                            <input type="text" name="ml" value="<?php echo isset($product['ml']) && is_array($product['ml']) ? htmlspecialchars(implode(', ', $product['ml'])) : ''; ?>" placeholder="e.g. 50ml, 100ml">
-                        </div>
                     </div>
                 </div>
                 
@@ -237,24 +210,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <!-- DESCRIPTIONS -->
                 <div class="form-section">
-                    <h2><i class="fas fa-file-alt"></i> Descriptions (Multi-language)</h2>
+                    <h2><i class="fas fa-file-alt"></i> Description</h2>
+                    <p class="section-desc">Write everything here including sizes or anything else. Press Enter to go to the next line.</p>
                     
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Description (Badini) *</label>
-                            <textarea name="desc_badini" rows="3" required><?php echo htmlspecialchars($product['desc']['badini'] ?? ''); ?></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Description (Sorani)</label>
-                            <textarea name="desc_sorani" rows="3"><?php echo htmlspecialchars($product['desc']['sorani'] ?? ''); ?></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Description (Arabic)</label>
-                            <textarea name="desc_arabic" rows="3"><?php echo htmlspecialchars($product['desc']['arabic'] ?? ''); ?></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Description (English) *</label>
-                            <textarea name="desc_english" rows="3" required><?php echo htmlspecialchars($product['desc']['english'] ?? ''); ?></textarea>
+                        <?php
+                        $desc_val = is_array($product['desc']) ? ($product['desc']['badini'] ?? '') : ($product['desc'] ?? '');
+                        ?>
+                        <div class="form-group" style="width: 100%;">
+                            <label>Description *</label>
+                            <textarea name="desc" rows="5" required><?php echo htmlspecialchars($desc_val); ?></textarea>
                         </div>
                     </div>
                 </div>

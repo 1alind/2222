@@ -47,27 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'arabic' => $_POST['title_arabic'] ?? '',
                     'english' => $_POST['title_english'] ?? ''
                 ],
-                'desc' => [
-                    'badini' => $_POST['desc_badini'] ?? '',
-                    'sorani' => $_POST['desc_sorani'] ?? '',
-                    'arabic' => $_POST['desc_arabic'] ?? '',
-                    'english' => $_POST['desc_english'] ?? ''
-                ]
+                'desc' => $_POST['desc'] ?? ''
             ];
             
             // Handle image URLs
             if (isset($_POST['images']) && is_array($_POST['images'])) {
                 $product['images'] = array_filter($_POST['images']);
-            }
-            
-            $sizes_input = $_POST['sizes'] ?? '';
-            if (trim($sizes_input) !== '') {
-                $product['sizes'] = array_map('trim', explode(',', $sizes_input));
-            }
-
-            $ml_input = $_POST['ml'] ?? '';
-            if (trim($ml_input) !== '') {
-                $product['ml'] = array_map('trim', explode(',', $ml_input));
             }
             
             $products[] = $product;
@@ -189,14 +174,6 @@ function sanitizeId($str) {
                             <label>Price *</label>
                             <input type="text" name="price" placeholder="e.g., 45,000 د.ع" required>
                         </div>
-                        <div class="form-group">
-                            <label>Sizes (shoes/clothes) - comma separated</label>
-                            <input type="text" name="sizes" placeholder="e.g. 40, 41, 42">
-                        </div>
-                        <div class="form-group">
-                            <label>Volumes (perfumes) - comma separated</label>
-                            <input type="text" name="ml" placeholder="e.g. 50ml, 100ml">
-                        </div>
                     </div>
                 </div>
                 
@@ -226,24 +203,13 @@ function sanitizeId($str) {
                 
                 <!-- DESCRIPTIONS -->
                 <div class="form-section">
-                    <h2><i class="fas fa-file-alt"></i> Descriptions (Multi-language)</h2>
+                    <h2><i class="fas fa-file-alt"></i> Description</h2>
+                    <p class="section-desc">Write everything here including sizes or anything else. Press Enter to go to the next line.</p>
                     
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Description (Badini) *</label>
-                            <textarea name="desc_badini" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Description (Sorani)</label>
-                            <textarea name="desc_sorani" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Description (Arabic)</label>
-                            <textarea name="desc_arabic" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Description (English) *</label>
-                            <textarea name="desc_english" rows="3" required></textarea>
+                        <div class="form-group" style="width: 100%;">
+                            <label>Description *</label>
+                            <textarea name="desc" rows="5" placeholder="e.g. 38,000 د.ع&#10;Available Sizes: 40, 41, 42" required></textarea>
                         </div>
                     </div>
                 </div>

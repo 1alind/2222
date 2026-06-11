@@ -177,8 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div class="form-group">
-                <label class="form-label">Description (HTML allowed)</label>
-                <input type="text" name="description" class="form-input" value="<?php echo htmlspecialchars($settings['description'] ?? ''); ?>">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-input" rows="4" placeholder="Enter store description..."><?php echo htmlspecialchars(str_replace('<br>', "\n", $settings['description'] ?? '')); ?></textarea>
             </div>
 
             <button type="submit" class="save-btn"><i class="fas fa-save"></i> Save Settings</button>

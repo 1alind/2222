@@ -35,7 +35,7 @@
         </div>
         
         <div class="description">
-            <?php echo $settings['description'] ?? 'بو فروتنا جل و بەرگێن گەنجان<br>دهوك - تاخێ سەرهلدان، نێزیك پاركا سەرهلدان'; ?>
+            <?php echo nl2br(htmlspecialchars(str_replace('<br>', "\n", $settings['description'] ?? "بو فروتنا جل و بەرگێن گەنجان\nدهوك - تاخێ سەرهلدان، نێزیك پاركا سەرهلدان"))); ?>
         </div>
 
 <div id="btnstbl">
