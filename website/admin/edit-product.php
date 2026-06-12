@@ -57,7 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'english' => $_POST['title_english'] ?? ''
         ];
         
-        $product['desc'] = $_POST['desc'] ?? '';
+        $product['desc'] = [
+            'badini' => $_POST['desc_badini'] ?? '',
+            'sorani' => $_POST['desc_sorani'] ?? '',
+            'arabic' => $_POST['desc_arabic'] ?? '',
+            'english' => $_POST['desc_english'] ?? ''
+        ];
         $product['last_edited_at'] = time();
         $product['last_edited_by'] = $_SESSION['admin_name'] ?? 'Unknown';
         
@@ -221,40 +226,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <!-- TITLES -->
                 <div class="form-section">
-                    <h2><i class="fas fa-heading"></i> Titles (Multi-language)</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h2 style="margin: 0;"><i class="fas fa-heading"></i> Titles (Multi-language)</h2>
+                        <button type="button" class="btn btn-secondary" onclick="autoTranslate('title')" style="padding: 5px 15px; font-size: 13px;">
+                            <i class="fas fa-language"></i> Auto Translate
+                        </button>
+                    </div>
                     
                     <div class="form-row">
                         <div class="form-group">
                             <label>Title (Badini) *</label>
-                            <input type="text" name="title_badini" value="<?php echo htmlspecialchars($product['title']['badini'] ?? ''); ?>" required>
+                            <input type="text" name="title_badini" id="title_badini" value="<?php echo htmlspecialchars($product['title']['badini'] ?? ''); ?>" required>
                         </div>
                         <div class="form-group">
                             <label>Title (Sorani)</label>
-                            <input type="text" name="title_sorani" value="<?php echo htmlspecialchars($product['title']['sorani'] ?? ''); ?>">
+                            <input type="text" name="title_sorani" id="title_sorani" value="<?php echo htmlspecialchars($product['title']['sorani'] ?? ''); ?>">
                         </div>
                         <div class="form-group">
                             <label>Title (Arabic)</label>
-                            <input type="text" name="title_arabic" value="<?php echo htmlspecialchars($product['title']['arabic'] ?? ''); ?>">
+                            <input type="text" name="title_arabic" id="title_arabic" value="<?php echo htmlspecialchars($product['title']['arabic'] ?? ''); ?>">
                         </div>
                         <div class="form-group">
                             <label>Title (English) *</label>
-                            <input type="text" name="title_english" value="<?php echo htmlspecialchars($product['title']['english'] ?? ''); ?>" required>
+                            <input type="text" name="title_english" id="title_english" value="<?php echo htmlspecialchars($product['title']['english'] ?? ''); ?>" required>
                         </div>
                     </div>
                 </div>
                 
                 <!-- DESCRIPTIONS -->
                 <div class="form-section">
-                    <h2><i class="fas fa-file-alt"></i> Description</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h2 style="margin: 0;"><i class="fas fa-file-alt"></i> Description</h2>
+                        <button type="button" class="btn btn-secondary" onclick="autoTranslate('desc')" style="padding: 5px 15px; font-size: 13px;">
+                            <i class="fas fa-language"></i> Auto Translate
+                        </button>
+                    </div>
                     <p class="section-desc">Write everything here including sizes or anything else. Press Enter to go to the next line.</p>
                     
                     <div class="form-row">
                         <?php
-                        $desc_val = is_array($product['desc']) ? ($product['desc']['badini'] ?? '') : ($product['desc'] ?? '');
+                        $desc_val = $product['desc'] ?? [];
+                        if (!is_array($desc_val)) {
+                            // Convert old string format backward compatibility
+                            $desc_val = ['badini' => $desc_val, 'sorani' => $desc_val, 'arabic' => $desc_val, 'english' => $desc_val];
+                        }
                         ?>
                         <div class="form-group" style="width: 100%;">
-                            <label>Description *</label>
-                            <textarea name="desc" rows="5" required><?php echo htmlspecialchars($desc_val); ?></textarea>
+                            <label>Description (Badini) *</label>
+                            <textarea name="desc_badini" id="desc_badini" rows="3" required><?php echo htmlspecialchars($desc_val['badini'] ?? ''); ?></textarea>
+                        </div>
+                        <div class="form-group" style="width: 100%;">
+                            <label>Description (Sorani)</label>
+                            <textarea name="desc_sorani" id="desc_sorani" rows="3"><?php echo htmlspecialchars($desc_val['sorani'] ?? ''); ?></textarea>
+                        </div>
+                        <div class="form-group" style="width: 100%;">
+                            <label>Description (Arabic)</label>
+                            <textarea name="desc_arabic" id="desc_arabic" rows="3"><?php echo htmlspecialchars($desc_val['arabic'] ?? ''); ?></textarea>
+                        </div>
+                        <div class="form-group" style="width: 100%;">
+                            <label>Description (English) *</label>
+                            <textarea name="desc_english" id="desc_english" rows="3" required><?php echo htmlspecialchars($desc_val['english'] ?? ''); ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -305,6 +336,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
 const existingSizes = <?php echo json_encode($product['sizes'] ?? []); ?>;
+
+async function autoTranslate(prefix) {
+    const fields = ['english', 'arabic', 'badini', 'sorani'];
+    let sourceText = '';
+    let sourceLang = '';
+    
+    for (const lang of fields) {
+        const val = document.getElementById(`${prefix}_${lang}`).value.trim();
+        if (val) {
+            sourceText = val;
+            sourceLang = lang;
+            break;
+        }
+    }
+    
+    if (!sourceText) {
+        alert('Please fill at least one language field to translate from.');
+        return;
+    }
+    
+    // Disable button and show loading text
+    const btn = event.currentTarget;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Translating...';
+    btn.disabled = true;
+    
+    const langMap = {
+        'english': 'en',
+        'arabic': 'ar',
+        'badini': 'ku',
+        'sorani': 'ku'
+    };
+    
+    const fromLang = langMap[sourceLang];
+    
+    try {
+        for (const target of fields) {
+            if (target === sourceLang) continue;
+            
+            // Don't overwrite if it already has text
+            if (document.getElementById(`${prefix}_${target}`).value.trim()) continue;
+            
+            const toLang = langMap[target];
+            const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(sourceText)}&langpair=${fromLang}|${toLang}`);
+            const data = await res.json();
+            
+            if (data && data.responseData && data.responseData.translatedText) {
+                document.getElementById(`${prefix}_${target}`).value = data.responseData.translatedText;
+            }
+        }
+    } catch(e) {
+        console.error('Translation failed', e);
+        alert('Translation failed. Please try again.');
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
 
 function handleTypeChange(select) {
     const type = select.value;

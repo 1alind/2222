@@ -71,13 +71,14 @@ if ($products && is_array($products)) {
         $title_arabic = htmlspecialchars($title['arabic'] ?? '');
         $title_english = htmlspecialchars($title['english'] ?? '');
         
-        $desc_val = $product['desc'] ?? '';
-        $desc_raw = is_array($desc_val) ? ($desc_val['badini'] ?? '') : $desc_val;
-        $desc_html = nl2br(htmlspecialchars($desc_raw));
-        $desc_badini = $desc_html;
-        $desc_sorani = $desc_html;
-        $desc_arabic = $desc_html;
-        $desc_english = $desc_html;
+        $desc_val = $product['desc'] ?? [];
+        if (!is_array($desc_val)) {
+            $desc_val = ['badini' => $desc_val, 'sorani' => $desc_val, 'arabic' => $desc_val, 'english' => $desc_val];
+        }
+        $desc_badini = nl2br(htmlspecialchars($desc_val['badini'] ?? ''));
+        $desc_sorani = nl2br(htmlspecialchars($desc_val['sorani'] ?? ''));
+        $desc_arabic = nl2br(htmlspecialchars($desc_val['arabic'] ?? ''));
+        $desc_english = nl2br(htmlspecialchars($desc_val['english'] ?? ''));
         
         $sizes_attr = isset($product['sizes']) && is_array($product['sizes']) ? htmlspecialchars(json_encode($product['sizes'])) : '';
         $ml_attr = isset($product['ml']) && is_array($product['ml']) ? htmlspecialchars(json_encode($product['ml'])) : '';
