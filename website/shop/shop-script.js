@@ -131,10 +131,14 @@ function openOrderModal(productId) {
         sizeGroup.style.display = 'flex';
         const perfumeSizes = ['30ml', '50ml', '75ml', '100ml'];
         perfumeSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
-    } else if (currentOrder.type === 'clothing') {
+    } else if (['clothing', 'tshirt', 'shirts', 'shorts'].includes(currentOrder.type)) {
         sizeGroup.style.display = 'flex';
-        const clothSizes = ['S', 'M', 'L', 'XL'];
+        const clothSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL'];
         clothSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
+    } else if (['jeans', 'trousers'].includes(currentOrder.type)) {
+        sizeGroup.style.display = 'flex';
+        const jeanSizes = ['28', '29', '30', '31', '32', '33', '34', '36', '38', '40', '42'];
+        jeanSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
     } else {
         sizeGroup.style.display = 'none';
     }

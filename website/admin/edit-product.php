@@ -194,6 +194,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="perfume" <?php echo ($product['type'] ?? 'general') === 'perfume' ? 'selected' : ''; ?>>Perfume</option>
                                 <option value="watch" <?php echo ($product['type'] ?? 'general') === 'watch' ? 'selected' : ''; ?>>Watch</option>
                                 <option value="clothing" <?php echo ($product['type'] ?? 'general') === 'clothing' ? 'selected' : ''; ?>>Clothing</option>
+                                <option value="tshirt" <?php echo ($product['type'] ?? 'general') === 'tshirt' ? 'selected' : ''; ?>>T-Shirt</option>
+                                <option value="shirts" <?php echo ($product['type'] ?? 'general') === 'shirts' ? 'selected' : ''; ?>>Shirts</option>
+                                <option value="trousers" <?php echo ($product['type'] ?? 'general') === 'trousers' ? 'selected' : ''; ?>>Trousers</option>
+                                <option value="jeans" <?php echo ($product['type'] ?? 'general') === 'jeans' ? 'selected' : ''; ?>>Jeans</option>
+                                <option value="shorts" <?php echo ($product['type'] ?? 'general') === 'shorts' ? 'selected' : ''; ?>>Shorts</option>
+                                <option value="accessories" <?php echo ($product['type'] ?? 'general') === 'accessories' ? 'selected' : ''; ?>>Accessories</option>
+                                <option value="glasses" <?php echo ($product['type'] ?? 'general') === 'glasses' ? 'selected' : ''; ?>>Glasses</option>
+                                <option value="hats" <?php echo ($product['type'] ?? 'general') === 'hats' ? 'selected' : ''; ?>>Hats</option>
                             </select>
                         </div>
                         <div class="form-group" id="optionsGroup" style="display: none;">
@@ -306,9 +314,11 @@ function handleTypeChange(select) {
     
     let options = [];
     if (type === 'shoes') {
-        options = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46"];
-    } else if (type === 'clothing') {
-        options = ["XS", "S", "M", "L", "XL", "XXL", "3XL"];
+        options = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"];
+    } else if (['clothing', 'tshirt', 'shirts', 'shorts'].includes(type)) {
+        options = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL", "6XL"];
+    } else if (['jeans', 'trousers'].includes(type)) {
+        options = ["28", "29", "30", "31", "32", "33", "34", "36", "38", "40", "42"];
     } else if (type === 'perfume') {
         options = ["30ml", "50ml", "75ml", "100ml", "125ml", "150ml", "200ml"];
     }
@@ -317,30 +327,39 @@ function handleTypeChange(select) {
         group.style.display = 'block';
         options.forEach(opt => {
             const label = document.createElement('label');
-            label.style.display = 'flex';
+            label.style.display = 'inline-flex';
             label.style.alignItems = 'center';
+            label.style.justifyContent = 'center';
             label.style.background = existingSizes.includes(opt) ? 'rgba(255, 140, 0, 0.2)' : 'rgba(255,255,255,0.05)';
-            label.style.padding = '5px 10px';
-            label.style.borderRadius = '5px';
+            label.style.border = existingSizes.includes(opt) ? '1px solid #ff8c00' : '1px solid rgba(255,255,255,0.1)';
+            label.style.color = existingSizes.includes(opt) ? '#ff8c00' : '';
+            label.style.boxShadow = existingSizes.includes(opt) ? '0 0 10px rgba(255, 140, 0, 0.2)' : 'none';
+            label.style.padding = '8px 16px';
+            label.style.borderRadius = '8px';
             label.style.cursor = 'pointer';
-            if(existingSizes.includes(opt)) {
-                label.style.border = '1px solid #ff8c00';
-            }
+            label.style.fontWeight = 'bold';
+            label.style.transition = 'all 0.2s';
+            label.style.userSelect = 'none';
+            label.style.minWidth = '50px';
             
             const cb = document.createElement('input');
             cb.type = 'checkbox';
             cb.name = 'sizes[]';
             cb.value = opt;
-            cb.style.marginRight = '8px';
+            cb.style.display = 'none';
             cb.checked = existingSizes.includes(opt);
             
             cb.addEventListener('change', function() {
                 if (this.checked) {
                     label.style.background = 'rgba(255, 140, 0, 0.2)';
-                    label.style.border = '1px solid #ff8c00';
+                    label.style.borderColor = '#ff8c00';
+                    label.style.color = '#ff8c00';
+                    label.style.boxShadow = '0 0 10px rgba(255, 140, 0, 0.2)';
                 } else {
                     label.style.background = 'rgba(255,255,255,0.05)';
-                    label.style.border = 'none';
+                    label.style.borderColor = 'rgba(255,255,255,0.1)';
+                    label.style.color = '';
+                    label.style.boxShadow = 'none';
                 }
             });
             

@@ -43,7 +43,20 @@
         "Media": "ڕاگەهاندن",
         "Confirm Delete": "تەئکیدا ژێبرنێ",
         "Are you sure you want to delete this product?": "تۆ یێ پشتڕاستی دڤێ بەرهەمی ژێببەی؟",
-        "Yes, Delete": "بەلێ، ژێببە"
+        "Yes, Delete": "بەلێ، ژێببە",
+        "Shoes": "پێلاڤ",
+        "Perfume": "بێهنخۆش",
+        "Watch": "کاتژمێر",
+        "Clothing": "جلوبەرگ",
+        "T-Shirt": "تی شێرت",
+        "Shirts": "کراس",
+        "Trousers": "پانتۆل",
+        "Jeans": "کابۆ",
+        "Shorts": "شورت",
+        "Accessories": "ئێکسسوارات",
+        "Glasses": "بەرچاوک",
+        "Hats": "کڵاو",
+        "Available Sizes": "قیاسێن بەردەست"
     },
     "sorani": {
         "Admin Panel": "پەناڵی ئەدمینان",
@@ -89,7 +102,20 @@
         "Media": "میدیا",
         "Confirm Delete": "دڵنیابوونەوە لە سڕینەوە",
         "Are you sure you want to delete this product?": "دڵنیای دەتەوێت ئەم بەرهەمە بسڕیتەوە؟",
-        "Yes, Delete": "بەڵێ، بسڕەوە"
+        "Yes, Delete": "بەڵێ، بسڕەوە",
+        "Shoes": "پێڵاو",
+        "Perfume": "بۆن",
+        "Watch": "کاتژمێر",
+        "Clothing": "جلوبەرگ",
+        "T-Shirt": "تیشێرت",
+        "Shirts": "کراس",
+        "Trousers": "پانتۆڵ",
+        "Jeans": "پانتۆڵی کابۆ",
+        "Shorts": "شۆرت",
+        "Accessories": "ئێکسسوارات",
+        "Glasses": "چاویلکە",
+        "Hats": "کڵاو",
+        "Available Sizes": "قەبارە بەردەستەکان"
     },
     "arabic": {
         "Admin Panel": "لوحة الإدارة",
@@ -135,7 +161,20 @@
         "Media": "الوسائط",
         "Confirm Delete": "تأكيد الحذف",
         "Are you sure you want to delete this product?": "هل أنت متأكد من حذف هذا المنتج؟",
-        "Yes, Delete": "نعم، احذف"
+        "Yes, Delete": "نعم، احذف",
+        "Shoes": "أحذية",
+        "Perfume": "عطور",
+        "Watch": "ساعات",
+        "Clothing": "ملابس",
+        "T-Shirt": "تي شيرت",
+        "Shirts": "قمصان",
+        "Trousers": "بناطيل",
+        "Jeans": "جينز",
+        "Shorts": "شورت",
+        "Accessories": "إكسسوارات",
+        "Glasses": "نظارات",
+        "Hats": "قبعات",
+        "Available Sizes": "المقاسات المتاحة"
     },
     "english": {}
 }

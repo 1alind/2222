@@ -7,6 +7,14 @@ const words = {
     'Perfume': { badini: 'بێهنخۆش', sorani: 'بۆن', arabic: 'عطور' }, 
     'Watch': { badini: 'کاتژمێر', sorani: 'کاتژمێر', arabic: 'ساعات' }, 
     'Clothing': { badini: 'جلوبەرگ', sorani: 'جلوبەرگ', arabic: 'ملابس' }, 
+    'T-Shirt': { badini: 'تی شێرت', sorani: 'تیشێرت', arabic: 'تي شيرت' },
+    'Shirts': { badini: 'کراس', sorani: 'کراس', arabic: 'قمصان' },
+    'Trousers': { badini: 'پانتۆل', sorani: 'پانتۆڵ', arabic: 'بناطيل' },
+    'Jeans': { badini: 'کابۆ', sorani: 'پانتۆڵی کابۆ', arabic: 'جينز' },
+    'Shorts': { badini: 'شورت', sorani: 'شۆرت', arabic: 'شورت' },
+    'Accessories': { badini: 'ئێکسسوارات', sorani: 'ئێکسسوارات', arabic: 'إكسسوارات' },
+    'Glasses': { badini: 'بەرچاوک', sorani: 'چاویلکە', arabic: 'نظارات' },
+    'Hats': { badini: 'کڵاو', sorani: 'کڵاو', arabic: 'قبعات' },
     'Available Sizes': { badini: 'قیاسێن بەردەست', sorani: 'قەبارە بەردەستەکان', arabic: 'المقاسات المتاحة' } 
 };
 
