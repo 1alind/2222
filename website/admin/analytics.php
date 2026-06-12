@@ -580,5 +580,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script src="admin-translate.js?v=1"></script>
 </body>
 </html>

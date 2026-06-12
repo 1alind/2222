@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'price' => $price,
                 'images' => [],
                 'created_at' => time(),
+                'added_by' => $_SESSION['admin_name'] ?? 'Unknown',
                 'title' => [
                     'badini' => $_POST['title_badini'] ?? '',
                     'sorani' => $_POST['title_sorani'] ?? '',
@@ -260,5 +261,6 @@ function logout() {
 }
 </script>
 
+<script src="admin-translate.js?v=1"></script>
 </body>
 </html>

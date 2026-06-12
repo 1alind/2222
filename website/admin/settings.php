@@ -187,5 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </div>
 
+<script src="admin-translate.js?v=1"></script>
 </body>
 </html>

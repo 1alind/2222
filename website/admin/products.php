@@ -158,6 +158,17 @@ $products = loadProducts();
                                         <i class="fas fa-image"></i> <?php echo count($product['images'] ?? []); ?>
                                     </span>
                                 </div>
+                                <div style="margin-top: 10px; font-size: 11px; color: rgba(255,255,255,0.4);">
+                                    <?php if(!empty($product['added_by'])): ?>
+                                        <p><i class="fas fa-user-plus"></i> Added by: <?php echo htmlspecialchars($product['added_by']); ?></p>
+                                    <?php endif; ?>
+                                    <?php if(!empty($product['created_at'])): ?>
+                                        <p><i class="fas fa-calendar-alt"></i> Added: <?php echo date('Y-m-d', $product['created_at']); ?></p>
+                                    <?php endif; ?>
+                                    <?php if(!empty($product['last_edited_by'])): ?>
+                                        <p style="margin-top:4px;"><i class="fas fa-user-edit"></i> Last edit by: <?php echo htmlspecialchars($product['last_edited_by']); ?></p>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                             
                             <div class="product-actions">
@@ -225,5 +236,6 @@ function logout() {
 }
 </script>
 
+<script src="admin-translate.js?v=1"></script>
 </body>
 </html>

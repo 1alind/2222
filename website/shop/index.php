@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="shop-style.css?v=<?php echo time(); ?>">
     <script>
         const storeSettings = <?php echo json_encode($settings); ?>;
+        const staticTranslations = <?php echo file_get_contents(__DIR__ . '/system_lang.json'); ?>;
     </script>
 </head>
 <body class="lang-badini">

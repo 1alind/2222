@@ -147,5 +147,6 @@ function logout() {
 }
 </script>
 
+<script src="admin-translate.js?v=1"></script>
 </body>
 </html>

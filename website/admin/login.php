@@ -1,14 +1,18 @@
 <?php
 session_start();
 
-// Hardcoded admin credentials (change this to your desired password)
-$ADMIN_PASSWORD = 'admin123'; // Change this!
+$admins = [
+    'admin123' => 'Super Admin',
+    'pass123' => 'Store Manager',
+    'shop2026' => 'Shop Assistant'
+];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     
-    if ($password === $ADMIN_PASSWORD) {
+    if (isset($admins[$password])) {
         $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_name'] = $admins[$password];
         header('Location: index.php');
         exit;
     } else {
@@ -153,5 +157,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 
+<script src="admin-translate.js?v=1"></script>
 </body>
 </html>

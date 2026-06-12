@@ -57,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
         
         $product['desc'] = $_POST['desc'] ?? '';
+        $product['last_edited_at'] = time();
+        $product['last_edited_by'] = $_SESSION['admin_name'] ?? 'Unknown';
         
         if (isset($_POST['existing_images']) && is_array($_POST['existing_images'])) {
             $product['images'] = array_filter($_POST['existing_images']);
@@ -296,5 +298,6 @@ function logout() {
 }
 </script>
 
+<script src="admin-translate.js?v=1"></script>
 </body>
 </html>
