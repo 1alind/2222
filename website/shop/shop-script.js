@@ -125,12 +125,16 @@ function openOrderModal(productId) {
         customMl.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
     } else if (currentOrder.type === 'shoes') {
         sizeGroup.style.display = 'flex';
-        const shoeSizes = ['39', '40', '41', '42', '43', '44', '45'];
+        const shoeSizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46'];
         shoeSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
     } else if (currentOrder.type === 'perfume') {
         sizeGroup.style.display = 'flex';
-        const perfumeSizes = ['50ml', '100ml'];
+        const perfumeSizes = ['30ml', '50ml', '75ml', '100ml'];
         perfumeSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
+    } else if (currentOrder.type === 'clothing') {
+        sizeGroup.style.display = 'flex';
+        const clothSizes = ['S', 'M', 'L', 'XL'];
+        clothSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
     } else {
         sizeGroup.style.display = 'none';
     }

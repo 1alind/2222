@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'type' => $type,
                 'badge' => $badge,
                 'price' => $price,
+                'sizes' => isset($_POST['sizes']) && is_array($_POST['sizes']) ? $_POST['sizes'] : [],
                 'images' => [],
                 'created_at' => time(),
                 'added_by' => $_SESSION['admin_name'] ?? 'Unknown',
@@ -173,13 +174,17 @@ function sanitizeId($str) {
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <select name="type" required>
+                            <select name="type" required onchange="handleTypeChange(this)">
                                 <option value="general">General</option>
                                 <option value="shoes">Shoes</option>
                                 <option value="perfume">Perfume</option>
                                 <option value="watch">Watch</option>
                                 <option value="clothing">Clothing</option>
                             </select>
+                        </div>
+                        <div class="form-group" id="optionsGroup" style="display: none;">
+                            <label>Available Sizes</label>
+                            <div id="sizeCheckboxes" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px;"></div>
                         </div>
                         <div class="form-group">
                             <label>Badge</label>
@@ -254,6 +259,57 @@ function sanitizeId($str) {
 </div>
 
 <script>
+function handleTypeChange(select) {
+    const type = select.value;
+    const group = document.getElementById('optionsGroup');
+    const container = document.getElementById('sizeCheckboxes');
+    container.innerHTML = '';
+    
+    let options = [];
+    if (type === 'shoes') {
+        options = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46"];
+    } else if (type === 'clothing') {
+        options = ["XS", "S", "M", "L", "XL", "XXL", "3XL"];
+    } else if (type === 'perfume') {
+        options = ["30ml", "50ml", "75ml", "100ml", "125ml", "150ml", "200ml"];
+    }
+    
+    if (options.length > 0) {
+        group.style.display = 'block';
+        options.forEach(opt => {
+            const label = document.createElement('label');
+            label.style.display = 'flex';
+            label.style.alignItems = 'center';
+            label.style.background = 'rgba(255,255,255,0.05)';
+            label.style.padding = '5px 10px';
+            label.style.borderRadius = '5px';
+            label.style.cursor = 'pointer';
+            
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.name = 'sizes[]';
+            cb.value = opt;
+            cb.style.marginRight = '8px';
+            
+            cb.addEventListener('change', function() {
+                if (this.checked) {
+                    label.style.background = 'rgba(255, 140, 0, 0.2)';
+                    label.style.border = '1px solid #ff8c00';
+                } else {
+                    label.style.background = 'rgba(255,255,255,0.05)';
+                    label.style.border = 'none';
+                }
+            });
+            
+            label.appendChild(cb);
+            label.appendChild(document.createTextNode(opt));
+            container.appendChild(label);
+        });
+    } else {
+        group.style.display = 'none';
+    }
+}
+document.addEventListener('DOMContentLoaded', () => handleTypeChange(document.querySelector('select[name="type"]')));
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
         window.location.href = 'logout.php';
