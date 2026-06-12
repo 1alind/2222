@@ -49,6 +49,29 @@
             <p class="shop-subtitle">[ Online Shopping - BETA ]</p>
         </div>
 
+        <!-- فلتر البحث والتصنيفات -->
+        <div class="shop-filters">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="shopSearch" onkeyup="filterProducts()" placeholder="Search in all languages...">
+            </div>
+            <div class="category-filters" id="categoryFilters">
+                <button class="cat-btn active" data-cat="all" onclick="filterCategory('all')"><i class="fas fa-border-all"></i> <span class="cat-label">All</span></button>
+                <button class="cat-btn" data-cat="shoes" onclick="filterCategory('shoes')"><i class="fas fa-shoe-prints"></i> <span class="cat-label">Shoes</span></button>
+                <button class="cat-btn" data-cat="clothing" onclick="filterCategory('clothing')"><i class="fas fa-tshirt"></i> <span class="cat-label">Clothing</span></button>
+                <button class="cat-btn" data-cat="tshirt" onclick="filterCategory('tshirt')"><i class="fas fa-tshirt"></i> <span class="cat-label">T-Shirt</span></button>
+                <button class="cat-btn" data-cat="shirts" onclick="filterCategory('shirts')"><i class="fas fa-user-tie"></i> <span class="cat-label">Shirts</span></button>
+                <button class="cat-btn" data-cat="trousers" onclick="filterCategory('trousers')"><i class="fas fa-person"></i> <span class="cat-label">Trousers</span></button>
+                <button class="cat-btn" data-cat="jeans" onclick="filterCategory('jeans')"><i class="fas fa-person"></i> <span class="cat-label">Jeans</span></button>
+                <button class="cat-btn" data-cat="shorts" onclick="filterCategory('shorts')"><i class="fas fa-person-walking-dashed-line-arrow-right"></i> <span class="cat-label">Shorts</span></button>
+                <button class="cat-btn" data-cat="perfume" onclick="filterCategory('perfume')"><i class="fas fa-spray-can"></i> <span class="cat-label">Perfume</span></button>
+                <button class="cat-btn" data-cat="watch" onclick="filterCategory('watch')"><i class="fas fa-clock"></i> <span class="cat-label">Watches</span></button>
+                <button class="cat-btn" data-cat="accessories" onclick="filterCategory('accessories')"><i class="fas fa-gem"></i> <span class="cat-label">Accessories</span></button>
+                <button class="cat-btn" data-cat="glasses" onclick="filterCategory('glasses')"><i class="fas fa-glasses"></i> <span class="cat-label">Glasses</span></button>
+                <button class="cat-btn" data-cat="hats" onclick="filterCategory('hats')"><i class="fas fa-hat-cowboy"></i> <span class="cat-label">Hats</span></button>
+            </div>
+        </div>
+
         <!-- شبكة المنتجات (تُجلب ديناميكياً من السكربت المنفصل) -->
         <div id="shopContent">
             <?php include __DIR__ . '/load-products.php'; ?>

@@ -85,10 +85,83 @@ body.lang-badini .back-btn-wrapper, body.lang-sorani .back-btn-wrapper, body.lan
 body.lang-english .back-btn i { transform: rotate(0deg); }
 body.lang-badini .back-btn i, body.lang-sorani .back-btn i, body.lang-arabic .back-btn i { transform: rotate(180deg); }
 
-.shop-header { margin-bottom: 35px; text-align: center; }
+.shop-header { margin-bottom: 25px; text-align: center; }
 .shop-logo { width: 130px; height: 130px; margin: 0 auto 10px auto; display: flex; justify-content: center; align-items: center; }
 .shop-logo svg { width: 100%; height: 100%; display: block; }
 .shop-subtitle { color: var(--neon-blue); font-size: 12px; letter-spacing: 1px; font-weight: bold; margin: 0; }
+
+/* الفلاتر والبحث */
+.shop-filters {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+}
+.search-container i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+body.lang-english .search-container i { left: 15px; }
+body.lang-badini .search-container i, body.lang-sorani .search-container i, body.lang-arabic .search-container i { right: 15px; }
+
+.search-container input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-main);
+    padding: 12px 15px;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+body.lang-english .search-container input { padding-left: 45px; }
+body.lang-badini .search-container input, body.lang-sorani .search-container input, body.lang-arabic .search-container input { padding-right: 45px; }
+
+.search-container input:focus { border-color: var(--neon-blue); }
+
+.category-filters {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 5px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+.category-filters::-webkit-scrollbar { height: 4px; display: none; }
+.category-filters::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+.cat-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.cat-btn:hover { background: rgba(255, 255, 255, 0.05); color: var(--text-main); }
+.cat-btn.active {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+    color: #000;
+    border-color: transparent;
+}
+.cat-btn i { font-size: 14px; }
 
 /* شبكة المنتجات */
 .products-grid {

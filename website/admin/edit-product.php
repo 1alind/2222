@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label>Price *</label>
-                            <input type="text" name="price" value="<?php echo htmlspecialchars($product['price'] ?? ''); ?>" required>
+                            <input type="text" name="price" id="priceInput" value="<?php echo htmlspecialchars($product['price'] ?? ''); ?>" oninput="formatPriceInput(this)" placeholder="e.g., 45,000" required>
                         </div>
                     </div>
                 </div>
@@ -272,8 +272,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                         ?>
                         <div class="form-group" style="width: 100%;">
-                            <label>Description (Badini) *</label>
-                            <textarea name="desc_badini" id="desc_badini" rows="3" required><?php echo htmlspecialchars($desc_val['badini'] ?? ''); ?></textarea>
+                            <label>Description (Badini)</label>
+                            <textarea name="desc_badini" id="desc_badini" rows="3"><?php echo htmlspecialchars($desc_val['badini'] ?? ''); ?></textarea>
                         </div>
                         <div class="form-group" style="width: 100%;">
                             <label>Description (Sorani)</label>
@@ -284,8 +284,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <textarea name="desc_arabic" id="desc_arabic" rows="3"><?php echo htmlspecialchars($desc_val['arabic'] ?? ''); ?></textarea>
                         </div>
                         <div class="form-group" style="width: 100%;">
-                            <label>Description (English) *</label>
-                            <textarea name="desc_english" id="desc_english" rows="3" required><?php echo htmlspecialchars($desc_val['english'] ?? ''); ?></textarea>
+                            <label>Description (English)</label>
+                            <textarea name="desc_english" id="desc_english" rows="3"><?php echo htmlspecialchars($desc_val['english'] ?? ''); ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -336,6 +336,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
 const existingSizes = <?php echo json_encode($product['sizes'] ?? []); ?>;
+
+function formatPriceInput(input) {
+    let val = input.value.replace(/,/g, '').replace(/[^\d]/g, '');
+    if (val) {
+        input.value = Number(val).toLocaleString('en-US');
+    } else {
+        input.value = '';
+    }
+}
 
 async function autoTranslate(prefix) {
     const fields = ['english', 'arabic', 'badini', 'sorani'];

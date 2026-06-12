@@ -205,7 +205,7 @@ function sanitizeId($str) {
                         </div>
                         <div class="form-group">
                             <label>Price *</label>
-                            <input type="text" name="price" placeholder="e.g., 45,000 د.ع" required>
+                            <input type="text" name="price" id="priceInput" placeholder="e.g., 45,000" oninput="formatPriceInput(this)" required>
                         </div>
                     </div>
                 </div>
@@ -251,8 +251,8 @@ function sanitizeId($str) {
                     
                     <div class="form-row">
                         <div class="form-group" style="width: 100%;">
-                            <label>Description (Badini) *</label>
-                            <textarea name="desc_badini" id="desc_badini" rows="3" required></textarea>
+                            <label>Description (Badini)</label>
+                            <textarea name="desc_badini" id="desc_badini" rows="3"></textarea>
                         </div>
                         <div class="form-group" style="width: 100%;">
                             <label>Description (Sorani)</label>
@@ -263,8 +263,8 @@ function sanitizeId($str) {
                             <textarea name="desc_arabic" id="desc_arabic" rows="3"></textarea>
                         </div>
                         <div class="form-group" style="width: 100%;">
-                            <label>Description (English) *</label>
-                            <textarea name="desc_english" id="desc_english" rows="3" required></textarea>
+                            <label>Description (English)</label>
+                            <textarea name="desc_english" id="desc_english" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -294,6 +294,15 @@ function sanitizeId($str) {
 </div>
 
 <script>
+function formatPriceInput(input) {
+    let val = input.value.replace(/,/g, '').replace(/[^\d]/g, '');
+    if (val) {
+        input.value = Number(val).toLocaleString('en-US');
+    } else {
+        input.value = '';
+    }
+}
+
 async function autoTranslate(prefix) {
     const fields = ['english', 'arabic', 'badini', 'sorani'];
     let sourceText = '';

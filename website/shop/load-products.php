@@ -147,7 +147,7 @@ if ($products && is_array($products)) {
                 </div>
                 
                 <div class="product-meta" style="flex-direction: column; align-items: flex-start; gap: 8px;">
-                    <span class="price"><?php echo $price; ?></span>
+                    <span class="price" data-raw-price="<?php echo $price; ?>"><?php echo $price; ?></span>
                     <?php if (isset($product['sizes']) && is_array($product['sizes']) && count($product['sizes']) > 0): ?>
                         <div class="available-options" style="display: flex; gap: 5px; flex-wrap: wrap;">
                             <?php foreach($product['sizes'] as $sz): ?>

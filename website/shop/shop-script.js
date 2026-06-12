@@ -26,10 +26,32 @@ function switchLanguage(lang) {
         const titleEl = card.querySelector('.prod-title');
         const descEl = card.querySelector('.prod-desc');
         const btnTextEl = card.querySelector('.order-btn .btn-text');
+        const priceEl = card.querySelector('.price');
 
         if(titleEl && titleEl.getAttribute('data-' + lang)) titleEl.textContent = titleEl.getAttribute('data-' + lang);
         if(descEl && descEl.getAttribute('data-' + lang)) descEl.innerHTML = descEl.getAttribute('data-' + lang);
         if(btnTextEl) btnTextEl.textContent = staticTranslations[lang].orderBtn;
+        
+        if(priceEl) {
+            let rawPrice = priceEl.getAttribute('data-raw-price') || '';
+            // Strip any existing currency texts from old products, preserve numbers and commas
+            rawPrice = rawPrice.replace(/[^\d.,]/g, '').trim(); 
+            
+            // Re-format just in case there are missing commas and strip trailing dots
+            rawPrice = rawPrice.replace(/\.+$/, '');
+            let numericVal = rawPrice.replace(/,/g, '');
+            if(!isNaN(numericVal) && numericVal !== '') {
+                rawPrice = Number(numericVal).toLocaleString('en-US');
+            }
+            
+            if (rawPrice !== '') {
+                if (lang === 'english') {
+                    priceEl.textContent = rawPrice + ' Iraqi Dinar';
+                } else {
+                    priceEl.textContent = rawPrice + ' دينار عراقي';
+                }
+            }
+        }
     });
 
     localStorage.setItem('selectedLanguage', lang);
@@ -221,6 +243,86 @@ function initViewTracking() {
     document.querySelectorAll('.product-card').forEach(card => {
         observer.observe(card);
     });
+}
+
+let currentCategory = 'all';
+
+function filterProducts() {
+    const searchTerm = document.getElementById('shopSearch').value.toLowerCase();
+    const cards = document.querySelectorAll('.product-card');
+    
+    cards.forEach(card => {
+        const titleEl = card.querySelector('.prod-title');
+        const descEl = card.querySelector('.prod-desc');
+        
+        let matchSearch = false;
+        if (titleEl) {
+            const tBadini = (titleEl.getAttribute('data-badini') || '').toLowerCase();
+            const tSorani = (titleEl.getAttribute('data-sorani') || '').toLowerCase();
+            const tArabic = (titleEl.getAttribute('data-arabic') || '').toLowerCase();
+            const tEnglish = (titleEl.getAttribute('data-english') || '').toLowerCase();
+            
+            if (tBadini.includes(searchTerm) || tSorani.includes(searchTerm) || tArabic.includes(searchTerm) || tEnglish.includes(searchTerm)) {
+                matchSearch = true;
+            }
+        }
+        
+        if (!matchSearch && descEl) {
+            const dBadini = (descEl.getAttribute('data-badini') || '').toLowerCase();
+            const dSorani = (descEl.getAttribute('data-sorani') || '').toLowerCase();
+            const dArabic = (descEl.getAttribute('data-arabic') || '').toLowerCase();
+            const dEnglish = (descEl.getAttribute('data-english') || '').toLowerCase();
+            
+            if (dBadini.includes(searchTerm) || dSorani.includes(searchTerm) || dArabic.includes(searchTerm) || dEnglish.includes(searchTerm)) {
+                matchSearch = true;
+            }
+        }
+        
+        let matchCat = false;
+        if (currentCategory === 'all') {
+            matchCat = true;
+        } else {
+            const type = card.getAttribute('data-type');
+            if (type === currentCategory) {
+                matchCat = true;
+            }
+        }
+        
+        if (matchSearch && matchCat) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // إخفاء/إظهار الأقسام التي ليس لديها منتجات
+    document.querySelectorAll('.product-category-section').forEach(section => {
+        let hasVisible = false;
+        section.querySelectorAll('.product-card').forEach(c => {
+            if (c.style.display !== 'none') hasVisible = true;
+        });
+        
+        if (hasVisible) {
+            section.style.display = 'block';
+        } else {
+            section.style.display = 'none';
+        }
+    });
+}
+
+function filterCategory(category) {
+    currentCategory = category;
+    
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === category) {
+            btn.classList.add('active');
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    filterProducts();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
