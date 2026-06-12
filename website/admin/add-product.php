@@ -275,8 +275,9 @@ function sanitizeId($str) {
                     <p class="section-desc">Upload one or more images</p>
                     
                     <div class="form-group">
-                        <input type="file" name="images[]" accept="image/*" multiple required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: #fff;">
+                        <input type="file" name="images[]" id="imageInput" accept="image/*" multiple required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: #fff;">
                     </div>
+                    <div id="imagePreviewContainer" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;"></div>
                 </div>
                 
                 <!-- FORM ACTIONS -->
@@ -294,6 +295,29 @@ function sanitizeId($str) {
 </div>
 
 <script>
+document.getElementById('imageInput').addEventListener('change', function(e) {
+    const container = document.getElementById('imagePreviewContainer');
+    container.innerHTML = '';
+    const files = e.target.files;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.style.width = '80px';
+                img.style.height = '80px';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '8px';
+                img.style.border = '2px solid var(--border-color)';
+                container.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+});
+
 function formatPriceInput(input) {
     let val = input.value.replace(/,/g, '').replace(/[^\d]/g, '');
     if (val) {

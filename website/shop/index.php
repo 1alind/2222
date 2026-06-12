@@ -110,6 +110,14 @@
             </div>
         </div>
 
+        <!-- ================= نافذة عرض الصور (Image Gallery Modal) ================= -->
+        <div id="imageModal" class="modal">
+            <div class="modal-content" style="max-width: 90%; max-height: 90vh; text-align: center; background: transparent; box-shadow: none; padding: 0;">
+                <span class="close-modal" onclick="closeImageModal()" style="color: #fff; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px; right: 10px; top: 10px;">&times;</span>
+                <img id="enlargedImg" src="" alt="Enlarged Product" style="max-width: 100%; max-height: 85vh; border-radius: 8px; object-fit: contain; background: #000;">
+            </div>
+        </div>
+
         <!-- الفوتر -->
         <footer class="shop-copyright">
             <p id="copyrightText">&copy; <?php echo date('Y'); ?> <strong>22 Show</strong>. All rights reserved.</p>

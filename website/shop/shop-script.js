@@ -172,6 +172,15 @@ function closeModal() {
     document.getElementById('orderModal').classList.remove('show');
 }
 
+function openImageModal(imgSrc) {
+    document.getElementById('enlargedImg').src = imgSrc;
+    document.getElementById('imageModal').classList.add('show');
+}
+
+function closeImageModal() {
+    document.getElementById('imageModal').classList.remove('show');
+}
+
 function updateQty(amount) {
     const qtyInput = document.getElementById('prodQty');
     let currentQty = parseInt(qtyInput.value) || 1;
@@ -332,7 +341,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initViewTracking();
     
     window.onclick = function(event) {
-        const modal = document.getElementById('orderModal');
-        if (event.target === modal) closeModal();
+        const orderModal = document.getElementById('orderModal');
+        const imgModal = document.getElementById('imageModal');
+        if (event.target === orderModal) closeModal();
+        if (event.target === imgModal) closeImageModal();
     }
 });

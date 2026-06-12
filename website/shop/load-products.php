@@ -95,7 +95,7 @@ if ($products && is_array($products)) {
                         if (strpos($src, 'http') !== 0) {
                             $src = '../' . $src;
                         }
-                        echo '<img src="' . $src . '" class="slide ' . $active_class . '" alt="Product Image">';
+                        echo '<img src="' . $src . '" class="slide ' . $active_class . '" alt="Product Image" onclick="openImageModal(this.src)" style="cursor: zoom-in;">';
                     }
                     ?>
                 </div>
