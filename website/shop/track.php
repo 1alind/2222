@@ -36,6 +36,8 @@ foreach ($analytics as &$stat) {
             $stat['swipes'] = ($stat['swipes'] ?? 0) + 1;
         } elseif ($action === 'whatsapp') {
             $stat['whatsapp'] = ($stat['whatsapp'] ?? 0) + 1;
+        } elseif ($action === 'time_spent') {
+            $stat['duration'] = ($stat['duration'] ?? 0) + ($data['duration'] ?? 0);
         }
         $found = true;
         break;
@@ -43,7 +45,7 @@ foreach ($analytics as &$stat) {
 }
 
 if (!$found) {
-    $newStat = ['id' => $id, 'views' => 0, 'orders' => 0, 'clicks' => 0, 'swipes' => 0, 'whatsapp' => 0];
+    $newStat = ['id' => $id, 'views' => 0, 'orders' => 0, 'clicks' => 0, 'swipes' => 0, 'whatsapp' => 0, 'duration' => 0];
     if ($action === 'view') {
         $newStat['views'] = 1;
     } elseif ($action === 'order') {
@@ -54,6 +56,8 @@ if (!$found) {
         $newStat['swipes'] = 1;
     } elseif ($action === 'whatsapp') {
         $newStat['whatsapp'] = 1;
+    } elseif ($action === 'time_spent') {
+        $newStat['duration'] = $data['duration'] ?? 0;
     }
     $analytics[] = $newStat;
 }
@@ -75,7 +79,7 @@ if (!isset($daily[$today])) {
 }
 
 if (!isset($daily[$today][$id])) {
-    $daily[$today][$id] = ['views' => 0, 'orders' => 0, 'clicks' => 0, 'swipes' => 0, 'whatsapp' => 0];
+    $daily[$today][$id] = ['views' => 0, 'orders' => 0, 'clicks' => 0, 'swipes' => 0, 'whatsapp' => 0, 'duration' => 0];
 }
 
 if ($action === 'view') {
@@ -88,6 +92,8 @@ if ($action === 'view') {
     $daily[$today][$id]['swipes'] = ($daily[$today][$id]['swipes'] ?? 0) + 1;
 } elseif ($action === 'whatsapp') {
     $daily[$today][$id]['whatsapp'] = ($daily[$today][$id]['whatsapp'] ?? 0) + 1;
+} elseif ($action === 'time_spent') {
+    $daily[$today][$id]['duration'] = ($daily[$today][$id]['duration'] ?? 0) + ($data['duration'] ?? 0);
 }
 
 file_put_contents($dailyFile, json_encode($daily, JSON_PRETTY_PRINT));

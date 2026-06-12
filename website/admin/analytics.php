@@ -85,20 +85,23 @@ for ($i = $daysDiff; $i >= 0; $i--) {
     if (isset($daily[$dateStr])) {
         foreach($daily[$dateStr] as $pid => $pdata) {
             if (!isset($aggregatedStats[$pid])) {
-                $aggregatedStats[$pid] = ['id' => $pid, 'views' => 0, 'orders' => 0, 'clicks' => 0, 'swipes' => 0, 'whatsapp' => 0];
+                $aggregatedStats[$pid] = ['id' => $pid, 'views' => 0, 'orders' => 0, 'clicks' => 0, 'swipes' => 0, 'whatsapp' => 0, 'duration' => 0];
             }
             $aggregatedStats[$pid]['views'] += $pdata['views'] ?? 0;
             $aggregatedStats[$pid]['orders'] += $pdata['orders'] ?? 0;
             $aggregatedStats[$pid]['clicks'] += $pdata['clicks'] ?? 0;
             $aggregatedStats[$pid]['swipes'] += $pdata['swipes'] ?? 0;
             $aggregatedStats[$pid]['whatsapp'] += $pdata['whatsapp'] ?? 0;
+            $aggregatedStats[$pid]['duration'] += $pdata['duration'] ?? 0;
         }
     }
 }
 
 foreach ($aggregatedStats as $pid => $stat) {
-    $totalViews += $stat['views'] ?? 0;
-    $totalOrders += $stat['orders'] ?? 0;
+    if (!in_array($pid, ['main_page', 'whatsapp', 'instagram', 'tiktok', 'snapchat', 'shop', 'applemaps', 'googlemaps', 'save_contact'])) {
+        $totalViews += $stat['views'] ?? 0;
+        $totalOrders += $stat['orders'] ?? 0;
+    }
     
     if (isset($productCategories[$pid])) {
         $type = $productCategories[$pid];
@@ -118,6 +121,23 @@ foreach ($products as $product) {
     $stat['title'] = $product['title']['english'] ?? 'N/A';
     $topProducts[] = $stat;
 }
+
+$mainPageStats = $aggregatedStats['main_page'] ?? ['views' => 0, 'duration' => 0];
+$mainPageViews = $mainPageStats['views'] ?? 0;
+$mainPageDurationSecs = $mainPageStats['duration'] ?? 0;
+$mainPageDurationMins = round($mainPageDurationSecs / 60);
+
+$linkClicks = [
+    'WhatsApp' => $aggregatedStats['whatsapp']['clicks'] ?? 0,
+    'Instagram' => $aggregatedStats['instagram']['clicks'] ?? 0,
+    'TikTok' => $aggregatedStats['tiktok']['clicks'] ?? 0,
+    'Snapchat' => $aggregatedStats['snapchat']['clicks'] ?? 0,
+    'Gallery' => $aggregatedStats['shop']['clicks'] ?? 0,
+    'Apple Maps' => $aggregatedStats['applemaps']['clicks'] ?? 0,
+    'Google Maps' => $aggregatedStats['googlemaps']['clicks'] ?? 0,
+    'Save Contact' => $aggregatedStats['save_contact']['clicks'] ?? 0,
+];
+arsort($linkClicks);
 
 usort($topProducts, fn($a, $b) => ($b['orders'] ?? 0) - ($a['orders'] ?? 0));
 ?>
@@ -196,7 +216,54 @@ usort($topProducts, fn($a, $b) => ($b['orders'] ?? 0) - ($a['orders'] ?? 0));
         <!-- CONTENT -->
         <div class="analytics-content">
             
-            <!-- STATS OVERVIEW -->
+            <!-- MAIN PAGE STATS -->
+            <h2>Main Page Analytics</h2>
+            <div class="stats-grid" style="margin-bottom: 20px;">
+                <div class="stat-card">
+                    <div class="stat-icon stat-views" style="background: rgba(255,100,100,0.2); color: #ff6464;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Unique Main Page Visitors</span>
+                        <span class="stat-value"><?php echo number_format($mainPageViews); ?></span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon stat-views" style="background: rgba(255,200,100,0.2); color: #ffc864;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Time Spent</span>
+                        <span class="stat-value"><?php echo number_format($mainPageDurationMins); ?> mins</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-section" style="margin-bottom: 30px;">
+                <h2>Link Clicks</h2>
+                <div class="table-wrapper">
+                    <table class="analytics-table">
+                        <thead>
+                            <tr>
+                                <th>Link</th>
+                                <th>Clicks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($linkClicks as $name => $clicks): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($name); ?></td>
+                                <td><?php echo number_format($clicks); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SHOP STATS OVERVIEW -->
+            <h2>Shop Analytics</h2>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon stat-views">

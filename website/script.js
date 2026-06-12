@@ -122,6 +122,12 @@ function foldLine(line, maxLength = 75) {
 
 // MAIN FUNCTION
 async function saveContact() {
+    fetch('./shop/track.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: 'save_contact', action: 'click' })
+    }).catch(e => console.error('Tracking error:', e));
+
     if (typeof urlDatabase === "undefined") {
         console.error("Error: urlDatabase is not defined.");
         return;
@@ -192,3 +198,35 @@ async function saveContact() {
         alert("Could not load image for contact.");
     }
 }
+
+// Analytics: track visitor & time spent
+document.addEventListener("DOMContentLoaded", () => {
+    // Determine if it's a new visit using session storage
+    if (!sessionStorage.getItem('visited_main_page')) {
+        sessionStorage.setItem('visited_main_page', '1');
+        // Track unique page view for main page
+        fetch('./shop/track.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: 'main_page', action: 'view' })
+        }).catch(e => console.error('Tracking error:', e));
+    }
+    
+    // Time spent on website tracking
+    let previousTime = Date.now();
+    
+    // Ping every 10 seconds
+    setInterval(() => {
+        const currentTime = Date.now();
+        const diff = Math.floor((currentTime - previousTime) / 1000); // in seconds
+        previousTime = currentTime;
+        
+        if (diff > 0) {
+            fetch('./shop/track.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: 'main_page', action: 'time_spent', duration: diff })
+            }).catch(() => {}); // silent fail
+        }
+    }, 10000);
+});
