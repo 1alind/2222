@@ -580,6 +580,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<script src="admin-translate.js?v=1"></script>
+<script src="admin-translate.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
