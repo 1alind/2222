@@ -107,13 +107,12 @@
 
 <button class="link-card brn8" onclick="openUrl('shop')">
         <span class="btn-icon">🖼️</span>
-        
-        <div class="btn-text-container">
-            <span class="link-text-shop" id="lang-galleryShowroom">Collection Gallery & Showroom</span>
-            <span class="beta-subtext" id="lang-deliveryInfo" style="font-size: 11px;">Operating from the Kurdistan Region with delivery across Iraq.</span>
-        </div>
+        <span class="link-text" id="lang-galleryShowroom">Collection Gallery & Showroom</span>
     </button>
+</div>
 
+<div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+    <span class="beta-subtext" id="lang-deliveryInfo" style="font-size: 11px; color: #888;">Operating from the Kurdistan Region with delivery across Iraq.</span>
 </div>
 
         <div class="map-container">
