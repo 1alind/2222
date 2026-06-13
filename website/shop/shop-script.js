@@ -153,7 +153,7 @@ function openOrderModal(productId) {
         sizeGroup.style.display = 'flex';
         const perfumeSizes = ['30ml', '50ml', '75ml', '100ml'];
         perfumeSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });
-    } else if (['clothing', 'tshirt', 'shirts', 'shorts'].includes(currentOrder.type)) {
+    } else if (['tshirt', 'shirts', 'shorts'].includes(currentOrder.type)) {
         sizeGroup.style.display = 'flex';
         const clothSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL', '6XL'];
         clothSizes.forEach(sz => { sizeSelect.innerHTML += `<option value="${sz}">${sz}</option>`; });

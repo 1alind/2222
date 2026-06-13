@@ -298,7 +298,7 @@ usort($topProducts, fn($a, $b) => ($b['orders'] ?? 0) - ($a['orders'] ?? 0));
             
             <!-- D3 CHART LINE -->
             <div class="chart-section" style="margin-bottom: 30px;">
-                <h2>Link Click-Through Trends (<?php echo htmlspecialchars($startDate); ?> to <?php echo htmlspecialchars($endDate); ?>)</h2>
+                <h2><span>Link Click-Through Trends</span> (<?php echo htmlspecialchars($startDate); ?> to <?php echo htmlspecialchars($endDate); ?>)</h2>
                 <div id="d3-line-chart" style="width: 100%; height: 350px; position: relative;"></div>
             </div>
 

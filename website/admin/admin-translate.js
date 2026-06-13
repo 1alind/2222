@@ -59,11 +59,8 @@ function switchAdminLang(lang) {
 }
 
 function setupLanguageSwitcher() {
-    const sidebar = document.querySelector('.sidebar-menu');
-    if (!sidebar) return;
-    
     const langHtml = `
-        <div style="padding: 15px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div class="lang-switcher-admin" style="padding: 15px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);">
             <p style="font-size: 12px; color: #888; margin-bottom: 8px;">Language</p>
             <select onchange="switchAdminLang(this.value)" style="width: 100%; padding: 8px; background: #222; color: #fff; border: 1px solid #444; border-radius: 5px;">
                 <option value="badini" ${currentLang === 'badini' ? 'selected' : ''}>بادیني</option>
@@ -74,12 +71,25 @@ function setupLanguageSwitcher() {
         </div>
     `;
     
-    // Check if sidebar-footer exists, insert before it
-    const footer = document.querySelector('.sidebar-footer');
-    if (footer) {
-        footer.insertAdjacentHTML('beforebegin', langHtml);
+    const sidebar = document.querySelector('.sidebar-menu');
+    if (sidebar) {
+        const footer = document.querySelector('.sidebar-footer');
+        if (footer) {
+            footer.insertAdjacentHTML('beforebegin', langHtml);
+        } else {
+            sidebar.insertAdjacentHTML('beforeend', langHtml);
+        }
     } else {
-        sidebar.insertAdjacentHTML('beforeend', langHtml);
+        const container = document.querySelector('.admin-container') || document.body;
+        container.insertAdjacentHTML('afterbegin', `
+        <div style="display:flex; justify-content:flex-end; padding:10px;">
+            <select onchange="switchAdminLang(this.value)" style="padding: 5px; background: #222; color: #fff; border: 1px solid #444; border-radius: 5px;">
+                <option value="badini" ${currentLang === 'badini' ? 'selected' : ''}>بادیني</option>
+                <option value="sorani" ${currentLang === 'sorani' ? 'selected' : ''}>سۆرانی</option>
+                <option value="arabic" ${currentLang === 'arabic' ? 'selected' : ''}>العربية</option>
+                <option value="english" ${currentLang === 'english' ? 'selected' : ''}>English</option>
+            </select>
+        </div>`);
     }
 }
 

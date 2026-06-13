@@ -95,10 +95,10 @@
     </button>
 
 <button class="link-card brn8" onclick="openUrl('shop')">
-        <span class="btn-icon">🛍️</span>
+        <span class="btn-icon">🖼️</span>
         
         <div class="btn-text-container">
-            <span class="link-text-shop">Online Shopping [BETA]</span>
+            <span class="link-text-shop">Collection Gallery & Showroom</span>
             <span class="beta-subtext">only available in Kurdistan region, republic of Iraq 🇮🇶.</span>
         </div>
     </button>

@@ -198,7 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="shoes" <?php echo ($product['type'] ?? 'general') === 'shoes' ? 'selected' : ''; ?>>Shoes</option>
                                 <option value="perfume" <?php echo ($product['type'] ?? 'general') === 'perfume' ? 'selected' : ''; ?>>Perfume</option>
                                 <option value="watch" <?php echo ($product['type'] ?? 'general') === 'watch' ? 'selected' : ''; ?>>Watch</option>
-                                <option value="clothing" <?php echo ($product['type'] ?? 'general') === 'clothing' ? 'selected' : ''; ?>>Clothing</option>
                                 <option value="tshirt" <?php echo ($product['type'] ?? 'general') === 'tshirt' ? 'selected' : ''; ?>>T-Shirt</option>
                                 <option value="shirts" <?php echo ($product['type'] ?? 'general') === 'shirts' ? 'selected' : ''; ?>>Shirts</option>
                                 <option value="trousers" <?php echo ($product['type'] ?? 'general') === 'trousers' ? 'selected' : ''; ?>>Trousers</option>
@@ -437,7 +436,7 @@ function handleTypeChange(select) {
     let options = [];
     if (type === 'shoes') {
         options = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"];
-    } else if (['clothing', 'tshirt', 'shirts', 'shorts'].includes(type)) {
+    } else if (['tshirt', 'shirts', 'shorts'].includes(type)) {
         options = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL", "6XL"];
     } else if (['jeans', 'trousers'].includes(type)) {
         options = ["28", "29", "30", "31", "32", "33", "34", "36", "38", "40", "42"];

@@ -184,7 +184,6 @@ function sanitizeId($str) {
                                 <option value="shoes">Shoes</option>
                                 <option value="perfume">Perfume</option>
                                 <option value="watch">Watch</option>
-                                <option value="clothing">Clothing</option>
                                 <option value="tshirt">T-Shirt</option>
                                 <option value="shirts">Shirts</option>
                                 <option value="trousers">Trousers</option>
@@ -394,7 +393,7 @@ function handleTypeChange(select) {
     let options = [];
     if (type === 'shoes') {
         options = ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47"];
-    } else if (['clothing', 'tshirt', 'shirts', 'shorts'].includes(type)) {
+    } else if (['tshirt', 'shirts', 'shorts'].includes(type)) {
         options = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL", "6XL"];
     } else if (['jeans', 'trousers'].includes(type)) {
         options = ["28", "29", "30", "31", "32", "33", "34", "36", "38", "40", "42"];
