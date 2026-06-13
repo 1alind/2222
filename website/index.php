@@ -107,7 +107,7 @@
 
 <button class="link-card brn8" onclick="openUrl('shop')">
         <span class="btn-icon">🖼️</span>
-        <span class="link-text" id="lang-galleryShowroom">Collection Gallery & Showroom</span>
+        <span class="link-text" id="lang-galleryShowroom">Products</span>
     </button>
 </div>
 

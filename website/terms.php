@@ -25,17 +25,24 @@ if(file_exists($settingsFile)) {
     </script>
     <style>
         .page-content {
-            background-color: var(--card-bg);
-            border-radius: var(--radius);
+            background-color: var(--card-bg, rgba(18, 18, 18, 0.7));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 30px;
             margin: 20px auto;
             max-width: 600px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: left;
+            border: 1px solid var(--border-color, #2a2a2a);
         }
         
+        .page-content h2 {
+            color: var(--text-main, #ffffff);
+        }
+
         .page-content p {
-            color: var(--text-color);
+            color: var(--text-secondary, #a0a0a0);
             line-height: 1.6;
             margin-bottom: 15px;
             font-size: 14px;
@@ -44,11 +51,18 @@ if(file_exists($settingsFile)) {
         .back-home {
             display: inline-block;
             margin-top: 20px;
-            color: #aaa;
+            color: var(--text-main, #ffffff);
             text-decoration: none;
             font-size: 14px;
+            padding: 10px 20px;
+            background-color: var(--border-color, #2a2a2a);
+            border-radius: 10px;
         }
         
+        .back-home:hover {
+            opacity: 0.8;
+        }
+
         body.lang-badini .page-content, body.lang-sorani .page-content, body.lang-arabic .page-content {
             text-align: right;
             direction: rtl;
@@ -66,11 +80,11 @@ if(file_exists($settingsFile)) {
 
         <div class="logo-container">
         <?php
-            if(!empty($settings['logoUrl'])) {
-                echo '<img src="'.htmlspecialchars($settings['logoUrl']).'" alt="Logo" class="main-logo">';
+            $logop = './logo.txt';
+            if (file_exists($logop)) {
+                echo file_get_contents($logop);
             } else {
-                $logoPath = '22show_logo.jpeg';
-                echo '<img src="'.$logoPath.'" alt="22 Show Logo" class="main-logo">';
+                echo "<!-- Logo text file not found -->";
             }
         ?>
         </div>

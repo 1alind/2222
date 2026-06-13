@@ -21,6 +21,24 @@ function switchLanguage(lang) {
     document.getElementById('btnModalConfirm').textContent = staticTranslations[lang].confirmBtn;
     
     if(document.getElementById('lblSize')) document.getElementById('lblSize').textContent = staticTranslations[lang].sizeLabel;
+    
+    const elementsToUpdate = [
+        'shopSubtitle', 'catAll', 'catShoes', 'catTshirt', 'catShirts',
+        'catTrousers', 'catJeans', 'catShorts', 'catPerfume', 'catWatches',
+        'catAccessories', 'catGlasses', 'catHats'
+    ];
+    
+    elementsToUpdate.forEach(key => {
+        if (staticTranslations[lang][key]) {
+            let el = document.getElementById('lang-' + key);
+            if (el) el.innerHTML = staticTranslations[lang][key];
+        }
+    });
+    
+    const searchInput = document.getElementById('shopSearch');
+    if (searchInput && staticTranslations[lang].searchHint) {
+        searchInput.placeholder = staticTranslations[lang].searchHint;
+    }
 
     document.querySelectorAll('.product-card').forEach(card => {
         const titleEl = card.querySelector('.prod-title');
@@ -54,7 +72,7 @@ function switchLanguage(lang) {
         }
     });
 
-    localStorage.setItem('selectedLanguage', lang);
+    localStorage.setItem('site_lang', lang);
 }
 
 // التحكم بالسلايدر عبر الأسهم والنقرات (PC)
@@ -190,7 +208,7 @@ function updateQty(amount) {
 }
 
 function submitToWhatsApp() {
-    const currentLang = localStorage.getItem('selectedLanguage') || 'badini';
+    const currentLang = localStorage.getItem('site_lang') || 'badini';
     const phoneNumber = (typeof storeSettings !== 'undefined' && storeSettings.whatsapp_number) ? storeSettings.whatsapp_number : "9647501859616";
     
     const qty = document.getElementById('prodQty').value;
@@ -335,7 +353,7 @@ function filterCategory(category) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const savedLang = localStorage.getItem('selectedLanguage') || 'badini';
+    const savedLang = localStorage.getItem('site_lang') || 'badini';
     switchLanguage(savedLang);
     initSliderScrollListeners();
     initViewTracking();

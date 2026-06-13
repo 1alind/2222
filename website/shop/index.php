@@ -46,7 +46,7 @@
                     }
                 ?>
             </div>
-            <p class="shop-subtitle">[ Collection Gallery & Showroom ]</p>
+            <p class="shop-subtitle" id="lang-shopSubtitle">[ Collection Gallery & Showroom ]</p>
         </div>
 
         <!-- فلتر البحث والتصنيفات -->
@@ -56,18 +56,18 @@
                 <input type="text" id="shopSearch" onkeyup="filterProducts()" placeholder="Search in all languages...">
             </div>
             <div class="category-filters" id="categoryFilters">
-                <button class="cat-btn active" data-cat="all" onclick="filterCategory('all')"><i class="fas fa-border-all"></i> <span class="cat-label">All</span></button>
-                <button class="cat-btn" data-cat="shoes" onclick="filterCategory('shoes')"><i class="fas fa-shoe-prints"></i> <span class="cat-label">Shoes</span></button>
-                <button class="cat-btn" data-cat="tshirt" onclick="filterCategory('tshirt')"><i class="fas fa-tshirt"></i> <span class="cat-label">T-Shirt</span></button>
-                <button class="cat-btn" data-cat="shirts" onclick="filterCategory('shirts')"><i class="fas fa-shirt"></i> <span class="cat-label">Shirts</span></button>
-                <button class="cat-btn" data-cat="trousers" onclick="filterCategory('trousers')"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em; display: inline-block; font-size: 1.1em;"><path d="M6,2h12l2,20h-5l-3-10l-3,10H4L6,2z"/></svg> <span class="cat-label">Trousers</span></button>
-                <button class="cat-btn" data-cat="jeans" onclick="filterCategory('jeans')"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em; display: inline-block; font-size: 1.1em;"><path d="M6,2h12l2,20h-5l-3-10l-3,10H4L6,2z"/><line x1="12" y1="2" x2="12" y2="7"/></svg> <span class="cat-label">Jeans</span></button>
-                <button class="cat-btn" data-cat="shorts" onclick="filterCategory('shorts')"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em; display: inline-block; font-size: 1.1em;"><path d="M6,4h12l1.5,10h-5l-2.5-4l-2.5,4h-5L6,4z"/></svg> <span class="cat-label">Shorts</span></button>
-                <button class="cat-btn" data-cat="perfume" onclick="filterCategory('perfume')"><i class="fas fa-spray-can"></i> <span class="cat-label">Perfume</span></button>
-                <button class="cat-btn" data-cat="watch" onclick="filterCategory('watch')"><i class="fas fa-clock"></i> <span class="cat-label">Watches</span></button>
-                <button class="cat-btn" data-cat="accessories" onclick="filterCategory('accessories')"><i class="fas fa-gem"></i> <span class="cat-label">Accessories</span></button>
-                <button class="cat-btn" data-cat="glasses" onclick="filterCategory('glasses')"><i class="fas fa-glasses"></i> <span class="cat-label">Glasses</span></button>
-                <button class="cat-btn" data-cat="hats" onclick="filterCategory('hats')"><i class="fas fa-hat-cowboy"></i> <span class="cat-label">Hats</span></button>
+                <button class="cat-btn active" data-cat="all" onclick="filterCategory('all')"><i class="fas fa-border-all"></i> <span class="cat-label" id="lang-catAll">All</span></button>
+                <button class="cat-btn" data-cat="shoes" onclick="filterCategory('shoes')"><i class="fas fa-shoe-prints"></i> <span class="cat-label" id="lang-catShoes">Shoes</span></button>
+                <button class="cat-btn" data-cat="tshirt" onclick="filterCategory('tshirt')"><i class="fas fa-tshirt"></i> <span class="cat-label" id="lang-catTshirt">T-Shirt</span></button>
+                <button class="cat-btn" data-cat="shirts" onclick="filterCategory('shirts')"><i class="fas fa-shirt"></i> <span class="cat-label" id="lang-catShirts">Shirts</span></button>
+                <button class="cat-btn" data-cat="trousers" onclick="filterCategory('trousers')"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em; display: inline-block; font-size: 1.1em;"><path d="M6,2h12l2,20h-5l-3-10l-3,10H4L6,2z"/></svg> <span class="cat-label" id="lang-catTrousers">Trousers</span></button>
+                <button class="cat-btn" data-cat="jeans" onclick="filterCategory('jeans')"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em; display: inline-block; font-size: 1.1em;"><path d="M6,2h12l2,20h-5l-3-10l-3,10H4L6,2z"/><line x1="12" y1="2" x2="12" y2="7"/></svg> <span class="cat-label" id="lang-catJeans">Jeans</span></button>
+                <button class="cat-btn" data-cat="shorts" onclick="filterCategory('shorts')"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em; display: inline-block; font-size: 1.1em;"><path d="M6,4h12l1.5,10h-5l-2.5-4l-2.5,4h-5L6,4z"/></svg> <span class="cat-label" id="lang-catShorts">Shorts</span></button>
+                <button class="cat-btn" data-cat="perfume" onclick="filterCategory('perfume')"><i class="fas fa-spray-can"></i> <span class="cat-label" id="lang-catPerfume">Perfume</span></button>
+                <button class="cat-btn" data-cat="watch" onclick="filterCategory('watch')"><i class="fas fa-clock"></i> <span class="cat-label" id="lang-catWatches">Watches</span></button>
+                <button class="cat-btn" data-cat="accessories" onclick="filterCategory('accessories')"><i class="fas fa-gem"></i> <span class="cat-label" id="lang-catAccessories">Accessories</span></button>
+                <button class="cat-btn" data-cat="glasses" onclick="filterCategory('glasses')"><i class="fas fa-glasses"></i> <span class="cat-label" id="lang-catGlasses">Glasses</span></button>
+                <button class="cat-btn" data-cat="hats" onclick="filterCategory('hats')"><i class="fas fa-hat-cowboy"></i> <span class="cat-label" id="lang-catHats">Hats</span></button>
             </div>
         </div>
 
