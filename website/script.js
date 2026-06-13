@@ -255,16 +255,16 @@ function switchLanguage(lang) {
 
     // Update texts with IDs
     const dictionary = staticTranslations[lang];
-    if (dictionary.galleryShowroom) {
-        let el = document.getElementById('lang-galleryShowroom');
-        if(el) el.innerHTML = dictionary.galleryShowroom;
-    }
-    if (dictionary.deliveryInfo) {
-        let el = document.getElementById('lang-deliveryInfo');
-        if(el) el.innerHTML = dictionary.deliveryInfo;
-    }
-    if (dictionary.saveContact) {
-        let el = document.getElementById('lang-saveContact');
-        if(el) el.innerHTML = dictionary.saveContact;
-    }
+    const elementsToUpdate = [
+        'galleryShowroom', 'deliveryInfo', 'saveContact',
+        'privacyTitle', 'privacyContent', 'termsTitle', 'termsContent',
+        'privacy', 'terms', 'copyright', 'backBtn'
+    ];
+    
+    elementsToUpdate.forEach(key => {
+        if (dictionary[key]) {
+            let el = document.getElementById('lang-' + key);
+            if (el) el.innerHTML = dictionary[key];
+        }
+    });
 }

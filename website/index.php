@@ -125,10 +125,10 @@
         </div>
 
        <footer class="copyright-section">
-    <p>&copy; <?php echo date('Y'); ?> <strong>22 Show</strong>. All rights reserved.</p>
+    <p id="lang-copyright">&copy; <?php echo date('Y'); ?> <strong>22 Show</strong>. All rights reserved.</p>
     <p style="margin-top: 5px; font-size: 11px;">
-        <a href="privacy.php" style="color: #777; text-decoration: none;">Privacy Policy</a> | 
-        <a href="terms.php" style="color: #777; text-decoration: none;">Terms of Service</a>
+        <a href="privacy.php" style="color: #777; text-decoration: none;" id="lang-privacy">Privacy Policy</a> | 
+        <a href="terms.php" style="color: #777; text-decoration: none;" id="lang-terms">Terms of Service</a>
     </p>
 </footer>
 

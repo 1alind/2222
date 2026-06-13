@@ -20,7 +20,11 @@
         "type": "جۆر:",
         "galleryShowroom": "پێشانگەهـ و پێشانگەها کۆکراوەیان",
         "deliveryInfo": "کاردکەین ل هەرێما کوردستانێ دگەل گەهاندنێ بۆ هەمی عێراقێ.",
-        "saveContact": "پاشکەوتکرنا ژمارێ"
+        "saveContact": "پاشکەوتکرنا ژمارێ",
+        "termsTitle": "مەرجێن بكارهینانێ",
+        "termsContent": "ب خێرهاتی بۆ فرۆشگەها 22 Show. ب بکارهێنانا خزمەتگوزاریێن مە، تو ڕازی دبی ل سەر مەرجێن مە. هەمی بەرهەم ل دیڤ بەردەستبوونێ نە، و دبیت بهایان بهێنە گۆهارتن. گەهاندن ل هەمی باژێرێن عێراقێ بەردەستە.",
+        "privacyTitle": "سیاسەتا تایبەتەمەندیێ",
+        "privacyContent": "ئەم د پابەندين ب پاراستنا تایبەتەمەندیا تە. زانیاریێن کەسی (وەک ناڤ، ژمارەیا تەلەفۆنێ، و ناونیشان) تەنها بۆ ڕێڤەبرنا داخوازیێن تە و گەهاندنێ دهێنە کۆمکرن و دگەل لایەنێن دەرڤە ناهێنە بەلاڤکرن. زانیاریێن تە د پاراستینە."
     },
     "sorani": {
         "backBtn": "گەڕانەوە بۆ لاپەڕەی سەرەکی",
@@ -43,7 +47,11 @@
         "type": "جۆر:",
         "galleryShowroom": "پێشانگا و پێشانگای کۆکراوەکان",
         "deliveryInfo": "لە هەرێمی کوردستانەوە کاردەکرێت لەگەڵ گەیاندن بۆ سەرتاسەری عێراق.",
-        "saveContact": "هەڵگرتنی ژمارە"
+        "saveContact": "هەڵگرتنی ژمارە",
+        "termsTitle": "مەرجەکانی بەکارهێنان",
+        "termsContent": "بەخێربێن بۆ فرۆشگای 22 Show. بە بەکارهێنانی خزمەتگوزارییەکانمان، تۆ ڕازیت بە پابەندبوون بە مەرجەکانمان. هەموو بەرهەمەکان بەپێی بەردەستبوونن، نرخەکانیش دەکرێت گۆڕانکارییان بەسەردا بێت. گەیاندن لە سەرتاسەری عێراق بەردەستە.",
+        "privacyTitle": "سیاسەتی تایبەتێتی",
+        "privacyContent": "ئێمە پابەندین بە پاراستنی تایبەتێتی تۆ. زانیارییە کەسییەکان (وەک ناو، ژمارەی تەلەفۆن و ناونیشان) تەنها بۆ جێبەجێکردنی داواکارییەکانت و گەیاندن کۆدەکرێنەوە و لەگەڵ لایەنی سێیەم هاوبەش ناکرێن. داتاکانت لای ئێمە پارێزراون."
     },
     "arabic": {
         "backBtn": "العودة للرئيسية",
@@ -66,7 +74,11 @@
         "type": "النوع:",
         "galleryShowroom": "معرض التشكيلة وصالة العرض",
         "deliveryInfo": "نعمل من إقليم كردستان مع توفر التوصيل لجميع أنحاء العراق.",
-        "saveContact": "حفظ جهة الاتصال"
+        "saveContact": "حفظ جهة الاتصال",
+        "termsTitle": "شروط الخدمة",
+        "termsContent": "مرحبًا بكم في متجر 22 Show. باستخدامك لخدماتنا، فإنك توافق على الالتزام بشروطنا. جميع المنتجات تخضع لمدى توفرها. قد تتغير الأسعار والتوفر في أي وقت. خدمات التوصيل متاحة في جميع أنحاء العراق.",
+        "privacyTitle": "سياسة الخصوصية",
+        "privacyContent": "نحن ملتزمون بحماية خصوصيتك في 22 Show. نقوم بجمع المعلومات الشخصية (مثل الاسم ورقم الهاتف والعنوان) فقط لمعالجة طلباتك والتعامل مع التوصيل. لن يتم مشاركة معلوماتك مع أطراف خارجية غير مصرح لها. بياناتك آمنة معنا."
     },
     "english": {
         "backBtn": "Back to Home",
@@ -89,6 +101,10 @@
         "type": "Type:",
         "galleryShowroom": "Collection Gallery & Showroom",
         "deliveryInfo": "Operating from the Kurdistan Region with delivery across Iraq.",
-        "saveContact": "Save Contact"
+        "saveContact": "Save Contact",
+        "termsTitle": "Terms of Service",
+        "termsContent": "Welcome to 22 Show. By accessing or using our services, you agree to comply with our terms. All products are subject to availability. Prices and availability may change at any time. Delivery services are available across Iraq. If you have any disputes, please contact us directly.",
+        "privacyTitle": "Privacy Policy",
+        "privacyContent": "At 22 Show, we are committed to protecting your privacy. We collect personal information (such as your name, phone number, and address) solely to process your orders and handle delivery. Your information will not be shared with unauthorized third parties. We use secure methods to ensure your data is safe with us."
     }
 }
