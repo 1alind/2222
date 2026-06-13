@@ -201,6 +201,10 @@ async function saveContact() {
 
 // Analytics: track visitor & time spent
 document.addEventListener("DOMContentLoaded", () => {
+    // Language setup
+    const savedLang = localStorage.getItem('site_lang') || 'english';
+    if(typeof switchLanguage === 'function') switchLanguage(savedLang);
+
     // Determine if it's a new visit using session storage
     if (!sessionStorage.getItem('visited_main_page')) {
         sessionStorage.setItem('visited_main_page', '1');
@@ -230,3 +234,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 10000);
 });
+
+// Translation handling
+function switchLanguage(lang) {
+    if(!staticTranslations || !staticTranslations[lang]) return;
+    
+    localStorage.setItem('site_lang', lang);
+    document.body.className = `lang-${lang}`;
+    
+    // Update language buttons active state
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        if(btn.textContent.toLowerCase().includes(lang) || btn.getAttribute('onclick').includes(lang)) {
+            btn.style.color = '#fff';
+            btn.style.fontWeight = 'bold';
+        } else {
+            btn.style.color = '#aaa';
+            btn.style.fontWeight = 'normal';
+        }
+    });
+
+    // Update texts with IDs
+    const dictionary = staticTranslations[lang];
+    if (dictionary.galleryShowroom) {
+        let el = document.getElementById('lang-galleryShowroom');
+        if(el) el.innerHTML = dictionary.galleryShowroom;
+    }
+    if (dictionary.deliveryInfo) {
+        let el = document.getElementById('lang-deliveryInfo');
+        if(el) el.innerHTML = dictionary.deliveryInfo;
+    }
+    if (dictionary.saveContact) {
+        let el = document.getElementById('lang-saveContact');
+        if(el) el.innerHTML = dictionary.saveContact;
+    }
+}

@@ -5,7 +5,7 @@ let langDict = {};
 
 async function initAdminLang() {
     try {
-        const res = await fetch('admin_lang.json');
+        const res = await fetch('admin_lang.json?v=' + Date.now());
         langDict = await res.json();
         
         applyTranslations();
@@ -59,6 +59,8 @@ function switchAdminLang(lang) {
 }
 
 function setupLanguageSwitcher() {
+    if (document.querySelector('.lang-switcher-admin')) return;
+    
     const langHtml = `
         <div class="lang-switcher-admin" style="padding: 15px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);">
             <p style="font-size: 12px; color: #888; margin-bottom: 8px;">Language</p>
@@ -93,4 +95,8 @@ function setupLanguageSwitcher() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", initAdminLang);
+if (document.readyState === 'loading') {
+    document.addEventListener("DOMContentLoaded", initAdminLang);
+} else {
+    initAdminLang();
+}

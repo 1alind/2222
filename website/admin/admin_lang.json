@@ -85,7 +85,8 @@
         "Product Management": "رێڤەبەريا بەرهەمان",
         "Visible": "دیار",
         "Hidden": "ڤەشارتي",
-        "Total Orders": "هەمی داخوازی"
+        "Total Orders": "هەمی داخوازی",
+        "Conversion Rate": "رێژا گۆهرینێ"
     },
     "sorani": {
         "Admin Panel": "پەناڵی ئەدمینان",
@@ -173,7 +174,8 @@
         "Product Management": "بەڕێوەبردنی بەرهەمەکان",
         "Visible": "دیار",
         "Hidden": "شاردراو",
-        "Total Orders": "کۆی داواکارییەکان"
+        "Total Orders": "کۆی داواکارییەکان",
+        "Conversion Rate": "ڕێژەی گۆڕین"
     },
     "arabic": {
         "Admin Panel": "لوحة الإدارة",
@@ -261,7 +263,8 @@
         "Product Management": "إدارة المنتجات",
         "Visible": "مرئي",
         "Hidden": "مخفي",
-        "Total Orders": "إجمالي الطلبات"
+        "Total Orders": "إجمالي الطلبات",
+        "Conversion Rate": "معدل التحويل"
     },
     "english": {}
 }

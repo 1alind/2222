@@ -17,7 +17,10 @@
         "save": "پاشکەوتکرن",
         "price": "بها:",
         "badge": "نیشان:",
-        "type": "جۆر:"
+        "type": "جۆر:",
+        "galleryShowroom": "پێشانگەهـ و پێشانگەها کۆکراوەیان",
+        "deliveryInfo": "کاردکەین ل هەرێما کوردستانێ دگەل گەهاندنێ بۆ هەمی عێراقێ.",
+        "saveContact": "پاشکەوتکرنا ژمارێ"
     },
     "sorani": {
         "backBtn": "گەڕانەوە بۆ لاپەڕەی سەرەکی",
@@ -37,7 +40,10 @@
         "save": "پاشەکەوتکردن",
         "price": "نرخ:",
         "badge": "نیشانە:",
-        "type": "جۆر:"
+        "type": "جۆر:",
+        "galleryShowroom": "پێشانگا و پێشانگای کۆکراوەکان",
+        "deliveryInfo": "لە هەرێمی کوردستانەوە کاردەکرێت لەگەڵ گەیاندن بۆ سەرتاسەری عێراق.",
+        "saveContact": "هەڵگرتنی ژمارە"
     },
     "arabic": {
         "backBtn": "العودة للرئيسية",
@@ -57,7 +63,10 @@
         "save": "حفظ",
         "price": "السعر:",
         "badge": "الشارة:",
-        "type": "النوع:"
+        "type": "النوع:",
+        "galleryShowroom": "معرض التشكيلة وصالة العرض",
+        "deliveryInfo": "نعمل من إقليم كردستان مع توفر التوصيل لجميع أنحاء العراق.",
+        "saveContact": "حفظ جهة الاتصال"
     },
     "english": {
         "backBtn": "Back to Home",
@@ -77,6 +86,9 @@
         "save": "Save",
         "price": "Price:",
         "badge": "Badge:",
-        "type": "Type:"
+        "type": "Type:",
+        "galleryShowroom": "Collection Gallery & Showroom",
+        "deliveryInfo": "Operating from the Kurdistan Region with delivery across Iraq.",
+        "saveContact": "Save Contact"
     }
 }

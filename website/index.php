@@ -12,11 +12,22 @@
     <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
     <script>
         const storeSettings = <?php echo json_encode($settings); ?>;
+        const staticTranslations = <?php
+            $langFile = __DIR__ . '/shop/system_lang.json';
+            echo file_exists($langFile) ? file_get_contents($langFile) : '{}';
+        ?>;
     </script>
 </head>
 <body>
 
     <div class="container">
+    
+        <div class="lang-switcher" style="display: flex; justify-content: flex-end; gap: 5px; margin-bottom: 15px;">
+            <button class="lang-btn" onclick="switchLanguage('badini')" style="background: none; border: none; color: #aaa; cursor: pointer;">بادیني</button>
+            <button class="lang-btn" onclick="switchLanguage('sorani')" style="background: none; border: none; color: #aaa; cursor: pointer;">سۆرانی</button>
+            <button class="lang-btn" onclick="switchLanguage('arabic')" style="background: none; border: none; color: #aaa; cursor: pointer;">العربية</button>
+            <button class="lang-btn" onclick="switchLanguage('english')" style="background: none; border: none; color: #aaa; cursor: pointer;">English</button>
+        </div>
 
         <div class="logo-container">
         <?php
@@ -81,7 +92,7 @@
           stroke-width="3"
           stroke-linecap="round"/>
 </svg>
-        <span class="link-text">Save Contact</span>
+        <span class="link-text" id="lang-saveContact">Save Contact</span>
     </button>
 
     <button class="link-card btn6" onclick="openUrl('applemaps')">
@@ -98,8 +109,8 @@
         <span class="btn-icon">🖼️</span>
         
         <div class="btn-text-container">
-            <span class="link-text-shop">Collection Gallery & Showroom</span>
-            <span class="beta-subtext">only available in Kurdistan region, republic of Iraq 🇮🇶.</span>
+            <span class="link-text-shop" id="lang-galleryShowroom">Collection Gallery & Showroom</span>
+            <span class="beta-subtext" id="lang-deliveryInfo" style="font-size: 11px;">Operating from the Kurdistan Region with delivery across Iraq.</span>
         </div>
     </button>
 
