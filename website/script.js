@@ -66,8 +66,8 @@ const urlDatabase = {
 function toggleWorkingHours() {
     const el = document.getElementById('workingHoursDropdown');
     const btn = document.getElementById('workingHoursBtnId');
-    if (el.style.display === 'none' || el.style.display === '') {
-        el.style.display = 'flex';
+    const isOpen = el.classList.toggle('open');
+    if (isOpen) {
         btn.style.borderColor = 'orange';
         fetch('./shop/track.php', {
             method: 'POST',
@@ -75,7 +75,6 @@ function toggleWorkingHours() {
             body: JSON.stringify({ id: 'working_hours', action: 'click' })
         }).catch(() => {});
     } else {
-        el.style.display = 'none';
         btn.style.borderColor = 'transparent';
     }
 }
