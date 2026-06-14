@@ -62,6 +62,24 @@ const urlDatabase = {
     "shop": "./shop"
 };
 
+// Toggle Working Hours List
+function toggleWorkingHours() {
+    const el = document.getElementById('workingHoursDropdown');
+    const btn = document.getElementById('workingHoursBtnId');
+    if (el.style.display === 'none' || el.style.display === '') {
+        el.style.display = 'flex';
+        btn.style.borderColor = 'orange';
+        fetch('./shop/track.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: 'working_hours', action: 'click' })
+        }).catch(() => {});
+    } else {
+        el.style.display = 'none';
+        btn.style.borderColor = 'transparent';
+    }
+}
+
 // Function updated to force a new tab target
 function openUrl(platform) {
     const destinationUrl = urlDatabase[platform];
@@ -258,7 +276,8 @@ function switchLanguage(lang) {
     const elementsToUpdate = [
         'galleryShowroom', 'deliveryInfo', 'saveContact',
         'privacyTitle', 'privacyContent', 'termsTitle', 'termsContent',
-        'privacy', 'terms', 'copyright', 'backBtn'
+        'privacy', 'terms', 'copyright', 'backBtn',
+        'workingHoursBtn', 'workingHoursAll', 'workingHoursFriday'
     ];
     
     elementsToUpdate.forEach(key => {

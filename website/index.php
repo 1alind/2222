@@ -109,6 +109,19 @@
         <span class="btn-icon">🖼️</span>
         <span class="link-text" id="lang-galleryShowroom">Products</span>
     </button>
+
+    <button class="link-card btn9" id="workingHoursBtnId" onclick="toggleWorkingHours()">
+        <span class="btn-icon">🕒</span>
+        <span class="link-text" id="lang-workingHoursBtn">Open / Working Hours</span>
+    </button>
+    <div id="workingHoursDropdown" style="display: none; width: 100%; max-width: 400px; padding: 15px; margin-bottom: 12px; background: rgba(18, 18, 18, 0.7); border: 1px solid var(--border-color); border-radius: 12px; box-sizing: border-box; text-align: center; color: var(--text-main); font-size: 15px; flex-direction: column; gap: 8px; transition: all 0.3s ease;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--border-color);">
+            <strong id="lang-workingHoursAll" style="color: #ffffff;">All days: 11am-12pm</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 5px;">
+            <strong id="lang-workingHoursFriday" style="color: #d4a017;">Fridays: 2pm-11am</strong>
+        </div>
+    </div>
 </div>
 
 <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">

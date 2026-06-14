@@ -38,7 +38,10 @@
         "catWatches": "دەمژمێر",
         "catAccessories": "ئێکسسوارات",
         "catGlasses": "چاڤیلکە",
-        "catHats": "کلاڤ"
+        "catHats": "کلاڤ",
+        "workingHoursBtn": "کاتێن کارکرنێ",
+        "workingHoursAll": "هەمی ڕۆژان: 11am-12pm",
+        "workingHoursFriday": "ئەینی: 2pm-11am"
     },
     "sorani": {
         "backBtn": "گەڕانەوە بۆ لاپەڕەی سەرەکی",
@@ -79,7 +82,10 @@
         "catWatches": "کاتژمێر",
         "catAccessories": "ئێکسسوارات",
         "catGlasses": "چاویلکە",
-        "catHats": "کڵاو"
+        "catHats": "کڵاو",
+        "workingHoursBtn": "کاتەکانی کارکردن",
+        "workingHoursAll": "هەموو ڕۆژان: 11am-12pm",
+        "workingHoursFriday": "هەینی: 2pm-11am"
     },
     "arabic": {
         "backBtn": "العودة للرئيسية",
@@ -120,7 +126,10 @@
         "catWatches": "ساعات",
         "catAccessories": "إكسسوارات",
         "catGlasses": "نظارات",
-        "catHats": "قبعات"
+        "catHats": "قبعات",
+        "workingHoursBtn": "ساعات العمل",
+        "workingHoursAll": "كل الأيام: 11am-12pm",
+        "workingHoursFriday": "الجمعة: 2pm-11am"
     },
     "english": {
         "backBtn": "Back to Home",
@@ -161,6 +170,9 @@
         "catWatches": "Watches",
         "catAccessories": "Accessories",
         "catGlasses": "Glasses",
-        "catHats": "Hats"
+        "catHats": "Hats",
+        "workingHoursBtn": "Open / Working Hours",
+        "workingHoursAll": "All days: 11am-12pm",
+        "workingHoursFriday": "Fridays: 2pm-11am"
     }
 }
